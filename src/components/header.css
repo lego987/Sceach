@@ -1,0 +1,119 @@
+/* header.css */
+body {
+    margin: 50;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.header {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 250px; /* Adjust the width as needed */
+    height: 100%;
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    z-index: 1000;
+}
+
+.header .container-fluid {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.header .logo {
+    font-size: 1.5em;
+    text-decoration: none;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header .logo h1 {
+    margin: 0;
+    font-size: 1.5em;
+}
+
+.header nav {
+    width: 100%;
+}
+
+.header .position-relative {
+    margin-top: auto;
+    width: 100%;
+}
+
+.header .position-relative .js-search-open {
+    color: #fff;
+    cursor: pointer;
+}
+
+.header .position-relative .bi-search {
+    font-size: 1.2em;
+}
+
+/* Additional styles to ensure the search form floats outside the header */
+.search-form-wrap {
+    position: absolute;
+    right: 0px; /* Position it to the right with a margin */
+    top: 0px; /* Position it from the top with a margin */
+    z-index: 2000; /* Ensure it floats above other elements */
+    transition: 0.3s all ease;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.search-form-wrap .search-form {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-form-wrap .search-form .form-control {
+    width: 300px;
+    border: none;
+    box-shadow: 0 15px 20px -10px rgba(0, 0, 0, 0.1);
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.search-form-wrap .search-form .form-control:active,
+.search-form-wrap .search-form .form-control:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.search-form-wrap .search-form .icon {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    opacity: 0.5;
+}
+
+.search-form-wrap .search-form .btn {
+    position: absolute;
+    top: 2px;
+    right: 4px;
+    padding: 0;
+    margin: 0;
+    line-height: 1;
+    font-size: 30px;
+}
+
+.search-form-wrap .search-form .btn:active,
+.search-form-wrap .search-form .btn:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.search-form-wrap.active {
+    visibility: visible;
+    opacity: 1;
+}
