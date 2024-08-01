@@ -25,7 +25,7 @@ export default function Header() {
                 {/* <img src="" alt="" /> */}
 
 
-                <h1>Sc<span className='text-green-400 ' style={{color:"#66BB6A"}}>
+                <h1>Sce<span className='text-green-400 ' style={{color:"#66BB6A"}}>
                     a
                     </span>
                     ch</h1>

@@ -12,14 +12,26 @@ body {
     top: 0;
     width: 250px; /* Adjust the width as needed */
     height: 100%;
-    background-color: rgba(63, 63, 63, 0.676);
+    background-color: rgba(51, 51, 51, 0.275);
     color: #fff;
     padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     z-index: 1000;
-    backdrop-filter: blur(10px);
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(10px); /* Adjust the blur radius as needed */
+    -webkit-backdrop-filter: blur(10px); /* For Safari */
+    background-color: rgba(51, 51, 51, 0.466); /* Match background color */
+    z-index: -1;
 }
 
 .header .container-fluid {
