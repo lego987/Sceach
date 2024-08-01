@@ -25,10 +25,10 @@ export default function Header() {
                 {/* <img src="" alt="" /> */}
 
 
-                <h1>F<span className='text-green-400 ' style={{color:"#66BB6A"}}>
-                    á
+                <h1>Sc<span className='text-green-400 ' style={{color:"#66BB6A"}}>
+                    a
                     </span>
-                    lta</h1>
+                    ch</h1>
             </a>
             <Nav />
             <div className="position-relative">
