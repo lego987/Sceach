@@ -1,55 +1,54 @@
-import Image from 'next/image';
-import styles from './report.css';
+import styles from './page.module.css';
 
 interface ReportItem {
   id: number;
-  name: string;
-  description: string; // Changed to description
+  county: string;
+  Severity: string;
+  townsland: string;
 }
 
-// Server Component for data fetching
-const fetchReportData = async (): Promise<ReportItem[]> => {
-  // Fetch data from local JSON file
-  const res = await fetch(users/tomasmarkey/documents/patchdata/report.json'); // Adjust URL if needed
-  if (!res.ok) {
-    throw new Error('Failed to fetch data');
-  }
-  return res.json();
-};
+// Hardcoded data for simplicity
+const reportData: ReportItem[] = [
+  { id: 12749, county: 'Cork', Severity: '7', townsland: 'Ballineen' },
+  { id: 29332, county: 'Cork', Severity: '9', townsland: 'Enniskeanne' },
+  { id: 38392, county: 'Tipperary', Severity: '4', townsland: 'Holy Cross' },
+];
 
-const ReportTable = async () => {
-  const data = await fetchReportData();
-
+const ReportTable = () => {
   return (
-    <table className={styles.table}>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        {data.length > 0 ? (
-          data.map(item => (
-            <tr key={item.id}>
-              <td>{item.id}</td>
-              <td>{item.name}</td>
-              <td>{item.description}</td>
-            </tr>
-          ))
-        ) : (
+    <div className={styles['table-container']}>
+      <table className={styles.table}>
+        <thead>
           <tr>
-            <td colSpan={3}>No data available</td>
+            <th>ID</th>
+            <th>County</th>
+            <th>Severity</th>
+            <th>townsland</th>
           </tr>
-        )}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {reportData.length > 0 ? (
+            reportData.map(item => (
+              <tr key={item.id}>
+                <td>{item.id}</td>
+                <td>{item.county}</td>
+                <td>{item.Severity}</td>
+                <td>{item.townsland}</td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={3}>No data available</td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
   );
 };
 
 // Server Component
-const ReportPage = async () => {
+const ReportPage = () => {
   return (
     <div className={styles.container}>
       <h1>Report Page</h1>
