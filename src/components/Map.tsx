@@ -54,7 +54,7 @@ const GeoSearch = () => {
 
 const Map = () => {
   return (
-    <MapContainer style={{ height: '100vh', width: '100%' }} center={[51.505, -0.09]} zoom={13}>
+    <MapContainer style={{ height: '100vh', width: '100%' }} center={[53.3498, -6.2603]} zoom={13}>
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

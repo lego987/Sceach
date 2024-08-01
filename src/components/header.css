@@ -12,7 +12,7 @@ body {
     top: 0;
     width: 250px; /* Adjust the width as needed */
     height: 100%;
-    background-color: rgba(51, 51, 51, 0.275);
+    background-color: rgba(0, 0, 0, 0.431);
     color: #fff;
     padding: 20px;
     display: flex;
@@ -30,7 +30,7 @@ body {
     height: 100%;
     backdrop-filter: blur(10px); /* Adjust the blur radius as needed */
     -webkit-backdrop-filter: blur(10px); /* For Safari */
-    background-color: rgba(51, 51, 51, 0.466); /* Match background color */
+    background-color: rgba(30, 30, 30, 0.22); /* Match background color */
     z-index: -1;
 }
 

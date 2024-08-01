@@ -5,7 +5,6 @@ import './header.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Nav from './Nav'
 import Sci from './Sci'
-import SearchForm from './SearchForm';
 
 export default function Header() {
     const [open, setOpen] = useState(false);
@@ -31,13 +30,6 @@ export default function Header() {
                     ch</h1>
             </a>
             <Nav />
-            <div className="position-relative">
-                <Sci />
-                <a className='mx-2 js-search-open' onClick={handleFormOpen}>
-                    <span className="bi-search"></span>
-                </a>
-                <SearchForm active={open} formOpen={handleFormOpen}/>
-            </div>
         </div>
    </header> 
   );
