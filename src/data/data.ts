@@ -1,10 +1,10 @@
 // data/data.ts
 
 export const navs = [
-  { id: 1, name: 'Home', link: '/', icon: 'bi-house-door-fill' },
-  { id: 2, name: 'Recent violations', link: '/recentviolations', icon: 'bi-file-text' },
-  { id: 3, name: 'Report', link: '/report', icon: 'bi-pencil' },
-  { id: 4, name: 'About us', link: '/about', icon: 'bi-info-circle' },
+  { id: 1, name: '      Home', link: '/', icon: 'bi-house-door-fill' },
+  { id: 2, name: 'Recent', link: '/recentviolations', icon: 'bi bi-list-task' },
+  { id: 3, name: 'Report', link: '/report', icon: 'bi bi-flag' },
+  { id: 4, name: 'About us', link: '/about', icon: 'bi bi-file-person-fill' },
   { id: 5, name: 'Contact', link: '/contact', icon: 'bi-envelope' },
 ];
 

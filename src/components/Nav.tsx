@@ -12,8 +12,8 @@ export default function Nav() {
           <li key={nav.id} className='text-red-500'>
             <Link href={nav.link} legacyBehavior>
               <a className='flex items-center p-2 hover:bg-gray-200'>
-                <i className={`bi ${nav.icon} mr-2 text-xl`}></i>
-                {nav.name}
+                <i className={`bi ${nav.icon} icon-style`}></i>
+                <span className='ml-2'>{nav.name}</span>
               </a>
             </Link>
           </li>
@@ -22,4 +22,5 @@ export default function Nav() {
     </nav>
   );
 }
+
 
