@@ -1,6 +1,26 @@
 /* src/components/Map.css */
+
 .leaflet-top.leaflet-right {
-    right: 10px;
-    top: 10px;
-  }
-  
+  right: 10px;
+  top: 10px;
+}
+
+.radius-control-container {
+  position: absolute;
+  top: 10px;
+  left: 260px;
+  background: rgba(59, 98, 1, 0.431); /* Semi-transparent background */
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 1000;
+  backdrop-filter: blur(10px); /* Apply blur effect */
+}
+
+.radius-control-label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.radius-control-slider {
+  width: 100%;
+}
