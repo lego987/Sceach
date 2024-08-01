@@ -1,13 +1,12 @@
-// src/components/Map.tsx
-
 "use client";
 
 import React, { useEffect } from 'react';
-import { MapContainer, TileLayer, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, useMap, ZoomControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-geosearch/dist/geosearch.css';
 import L from 'leaflet';
 import { OpenStreetMapProvider, GeoSearchControl } from 'leaflet-geosearch';
+import './Map.css'; // Import the custom CSS file
 
 // Fixing the issue with missing marker icons
 import icon from 'leaflet/dist/images/marker-icon.png';
@@ -54,12 +53,18 @@ const GeoSearch = () => {
 
 const Map = () => {
   return (
-    <MapContainer style={{ height: '100vh', width: '100%' }} center={[53.3498, -6.2603]} zoom={13}>
+    <MapContainer
+      style={{ height: '100vh', width: '100%' }}
+      center={[53.3498, -6.2603]}
+      zoom={13}
+      zoomControl={false} // Disable default zoom control
+    >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
       <GeoSearch />
+      <ZoomControl position="topright" /> {/* Add zoom control to top right */}
     </MapContainer>
   );
 };

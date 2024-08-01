@@ -1,0 +1,6 @@
+/* src/components/Map.css */
+.leaflet-top.leaflet-right {
+    right: 10px;
+    top: 10px;
+  }
+  

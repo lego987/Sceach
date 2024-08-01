@@ -2,242 +2,228 @@
 # Desktop Navigation 
 --------------------------------------------------------------*/
 @media (min-width: 1280px) {
-  .navbar {
+    .navbar {
       padding: 0;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-  }
-
-  .navbar ul {
+    }
+  
+    .navbar ul {
       margin: 0;
       padding: 0;
       display: flex;
       flex-direction: column;
       list-style: none;
       width: 100%;
-  }
-
-  .navbar li {
+    }
+  
+    .navbar li {
       position: relative;
       width: 100%;
-  }
-
-  .navbar a,
-  .navbar a:focus {
+    }
+  
+    .navbar a,
+    .navbar a:focus {
       display: flex;
       align-items: center;
       justify-content: flex-start;
-      padding: 10px 30px;
-      font-family: var(--font-primary);
-      font-size: 16px;
-      font-weight: 500;
-      color: rgba(var(--color-default-rgb), 1);
+      padding: 20px 20px;
+      font-family: 'Arial', sans-serif; /* Update this if you use a different font */
+      font-size: 1rem; /* Updated to match Tailwind text size */
+      font-weight: 600; /* Updated to match Tailwind font weight */
+      color: rgb(255, 255, 255); /* Tailwind default blue-500 color */
+      text-decoration: none; /* Ensure links are not underlined */
       white-space: nowrap;
-      transition: 0.3s;
+      transition: color 0.3s;
       width: 100%;
-  }
-
-  .navbar a i,
-  .navbar a:focus i {
-      font-size: 30px;
-      line-height: 0;
-      margin-left: 5px;
-  }
-
-  .navbar a:hover,
-  .navbar .active,
-  .navbar .active:focus,
-  .navbar li:hover > a {
-      color: var(--color-default);
-  }
-
-  .navbar .getstarted,
-  .navbar .getstarted:focus {
-      background: var(--color-primary);
+    }
+  
+    .navbar a:hover,
+    .navbar .active,
+    .navbar .active:focus,
+    .navbar li:hover > a {
+      color: rgb(191, 253, 180); /* Tailwind default blue-700 color */
+    }
+  
+    .navbar .getstarted,
+    .navbar .getstarted:focus {
+      background: rgba(59, 130, 246, 1); /* Tailwind default blue-500 color */
       padding: 8px 20px;
       margin: 10px 0;
       border-radius: 4px;
-      color: var(--color-white);
+      color: #ffffff;
       width: calc(100% - 60px);
       text-align: center;
-  }
-
-  .navbar .getstarted:hover,
-  .navbar .getstarted:focus:hover {
-      color: var(--color-white);
-      background: rgba(var(--color-primary-rgb), 0.8);
-  }
-
-  .navbar .dropdown ul {
+      display: block;
+    }
+  
+    .navbar .getstarted:hover,
+    .navbar .getstarted:focus:hover {
+      color: #ffffff;
+      background: rgba(59, 130, 246, 0.8); /* Tailwind default blue-400 color */
+    }
+  
+    .navbar .dropdown ul {
       display: block;
       position: relative;
       padding: 10px 0;
       z-index: 99;
       opacity: 0;
       visibility: hidden;
-      background: var(--color-white);
+      background: #ffffff;
       box-shadow: 0px 0px 30px rgba(202, 202, 202, 0.415);
-      transition: 0.3s;
+      transition: opacity 0.3s, visibility 0.3s;
       border-radius: 4px;
       flex-direction: column;
-  }
-
-  .navbar .dropdown ul li {
+    }
+  
+    .navbar .dropdown ul li {
       min-width: 200px;
-  }
-
-  .navbar .dropdown ul a {
+    }
+  
+    .navbar .dropdown ul a {
       padding: 10px 20px;
       font-size: 15px;
-      text-transform: none;
       font-weight: 400;
-  }
-
-  .navbar .dropdown ul a i {
-      font-size: 12px;
-  }
-
-  .navbar .dropdown ul a:hover,
-  .navbar .dropdown ul .active:hover,
-  .navbar .dropdown ul li:hover > a {
-      color: var(--color-primary);
-  }
-
-  .navbar .dropdown:hover > ul {
+      text-transform: none;
+    }
+  
+    .navbar .dropdown ul a:hover,
+    .navbar .dropdown ul .active:hover,
+    .navbar .dropdown ul li:hover > a {
+      color: rgba(59, 130, 246, 1); /* Tailwind default blue-500 color */
+    }
+  
+    .navbar .dropdown:hover > ul {
       opacity: 1;
       visibility: visible;
-  }
-
-  .navbar .dropdown .dropdown ul {
+    }
+  
+    .navbar .dropdown .dropdown ul {
       visibility: hidden;
-  }
-
-  .navbar .dropdown .dropdown:hover > ul {
+    }
+  
+    .navbar .dropdown .dropdown:hover > ul {
       opacity: 1;
       visibility: visible;
+    }
   }
-}
-
-@media (min-width: 1280px) and (max-width: 1366px) {
-  .navbar .dropdown .dropdown ul {
+  
+  @media (min-width: 1280px) and (max-width: 1366px) {
+    .navbar .dropdown .dropdown ul {
       left: -90%;
-  }
-
-  .navbar .dropdown .dropdown:hover > ul {
+    }
+  
+    .navbar .dropdown .dropdown:hover > ul {
       left: -100%;
+    }
   }
-}
-
-.mobile-nav-toggle {
-  display: none;
-}
-
-/*--------------------------------------------------------------
-# Mobile Navigation
---------------------------------------------------------------*/
-@media (max-width: 1279px) {
-  .navbar {
+  
+  .mobile-nav-toggle {
+    display: none;
+  }
+  
+  /*--------------------------------------------------------------
+  # Mobile Navigation
+  --------------------------------------------------------------*/
+  @media (max-width: 1279px) {
+    .navbar {
       padding: 0;
       z-index: 9997;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-  }
-
-  .navbar ul {
+    }
+  
+    .navbar ul {
       display: none;
       position: absolute;
       inset: 55px 15px 15px 15px;
       padding: 10px 0;
       margin: 0;
       border-radius: 10px;
-      background-color: var(--color-white);
+      background-color: #ffffff;
       overflow-y: auto;
-      transition: 0.3s;
+      transition: all 0.3s ease-in-out;
       z-index: 9998;
-  }
-
-  .navbar a,
-  .navbar a:focus {
+    }
+  
+    .navbar a,
+    .navbar a:focus {
       display: flex;
       align-items: center;
       justify-content: flex-start;
       padding: 10px 20px;
-      font-family: var(--font-primary);
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--color-primary);
+      font-family: 'Arial', sans-serif; /* Update this if you use a different font */
+      font-size: 1.25rem; /* Updated to match Tailwind text size */
+      font-weight: 600; /* Updated to match Tailwind font weight */
+      color: rgba(59, 130, 246, 1); /* Tailwind default blue-500 color */
+      text-decoration: none; /* Ensure links are not underlined */
       white-space: nowrap;
-      transition: 0.3s;
+      transition: color 0.3s;
       width: 100%;
-  }
-
-  .navbar a i,
-  .navbar a:focus i {
-      font-size: 12px;
-      line-height: 0;
-      margin-left: 5px;
-  }
-
-  .navbar a:hover,
-  .navbar .active,
-  .navbar .active:focus,
-  .navbar li:hover > a {
-      color: var(--color-primary);
-  }
-
-  .navbar .dropdown ul,
-  .navbar .dropdown .dropdown ul {
+    }
+  
+    .navbar a:hover,
+    .navbar .active,
+    .navbar .active:focus,
+    .navbar li:hover > a {
+      color: rgba(29, 78, 216, 1); /* Tailwind default blue-700 color */
+    }
+  
+    .navbar .dropdown ul,
+    .navbar .dropdown .dropdown ul {
       position: static;
       display: none;
       z-index: 99;
       padding: 10px 0;
       margin: 10px 20px;
-      background: var(--color-white);
+      background: #ffffff;
       transition: all 0.5s ease-in-out;
-      box-shadow: 0px 0px 30px rgba(var(--color-black-rgb), 0.1);
-  }
-
-  .navbar .dropdown > .dropdown-active,
-  .navbar .dropdown .dropdown > .dropdown-active {
+      box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
+    }
+  
+    .navbar .dropdown > .dropdown-active,
+    .navbar .dropdown .dropdown > .dropdown-active {
       display: block;
-  }
-
-  .mobile-nav-toggle {
+    }
+  
+    .mobile-nav-toggle {
       display: inline-block;
-      color: var(--color-secondary);
+      color: rgba(59, 130, 246, 1); /* Tailwind default blue-500 color */
       font-size: 28px;
       cursor: pointer;
       line-height: 0;
-      transition: 0.5s;
-  }
-
-  .mobile-nav-toggle.bi-x {
-      color: var(--color-black);
-  }
-
-  .mobile-nav-active {
+      transition: color 0.5s;
+    }
+  
+    .mobile-nav-toggle.bi-x {
+      color: rgba(0, 0, 0, 1); /* Tailwind default black color */
+    }
+  
+    .mobile-nav-active {
       overflow: hidden;
-  }
-
-  .mobile-nav-active .mobile-nav-toggle {
+    }
+  
+    .mobile-nav-active .mobile-nav-toggle {
       position: fixed;
       top: 15px;
       right: 15px;
       z-index: 9999;
-      color: var(--color-white);
-  }
-
-  .mobile-nav-active .navbar {
+      color: #ffffff; /* Tailwind default white color */
+    }
+  
+    .mobile-nav-active .navbar {
       position: fixed;
       overflow: hidden;
       inset: 0;
-      background: rgba(var(--color-black-rgb), 0.6);
-      transition: 0.3s;
-  }
-
-  .mobile-nav-active .navbar > ul {
+      background: rgba(0, 0, 0, 0.6); /* Tailwind default black with opacity */
+      transition: all 0.3s;
+    }
+  
+    .mobile-nav-active .navbar > ul {
       display: block;
+    }
   }
-}
+  

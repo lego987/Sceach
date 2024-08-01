@@ -1,4 +1,5 @@
 /* header.css */
+
 body {
     margin: 50;
     padding: 0;
@@ -12,8 +13,8 @@ body {
     top: 0;
     width: 250px; /* Adjust the width as needed */
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.431);
-    color: #fff;
+    background-color: rgba(59, 98, 1, 0.431);
+    color: rgb(255, 137, 137);
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -41,7 +42,7 @@ body {
 }
 
 .header .logo {
-    font-size: 1.5em;
+    font-size: 1em;
     text-decoration: none;
     color: #fff;
     display: flex;
@@ -51,8 +52,13 @@ body {
 
 .header .logo h1 {
     margin: 0;
-    font-size: 1.5em;
+    font-size: 2.5em;
 }
+
+.header .logo {
+    margin-top: 10px;
+}
+
 
 .header nav {
     width: 100%;
@@ -64,7 +70,7 @@ body {
 }
 
 .header .position-relative .js-search-open {
-    color: #fff;
+    color: rgb(117, 75, 75);
     cursor: pointer;
 }
 

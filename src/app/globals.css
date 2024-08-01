@@ -7,14 +7,14 @@
 {/*Body Text Colour Change and info */}
 html, body {
   height: 100%;
-  font-family: 'Source Sans Pro';
+  font-family: 'Helvetica';
   color: rgb(255, 255, 255);
   background-color: #ffffff;
   line-height: 1.6;
 }
 html, h1 {
   height: 100%;
-  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  font-family: Helvetica, sans-serif;
   color: rgb(255, 255, 255);
   line-height: 1.6;
 }
