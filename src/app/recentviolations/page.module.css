@@ -8,10 +8,11 @@
   
   .table {
     width: 100%;
-    max-width: 1000px; /* Set a maximum width for the table */
+    max-width: 1200px; /* Set a maximum width for the table */
     border-collapse: collapse; /* Collapse borders into a single line */
-    margin-top: 20px;
-    margin-left: 250px;
+    margin-top: 10px;
+    margin-left: 200px;
+    margin-right: 40px;
     font-family: Arial, sans-serif;
     border: 2px solid rgb(0, 0, 0); /* Border around the table */
     border-radius: 8px; /* Rounded corners */
@@ -25,24 +26,25 @@
     white-space: nowrap; /* Prevent text from wrapping */
     overflow: hidden; /* Hide overflow text */
     text-overflow: ellipsis; /* Display ellipsis for overflow text */
+    color: #000000; /* Text color changed to black */
   }
   
   .table th {
-    background-color: #a9f34eb5; /* Background color for header */
+    background-color: #d0f8a9; /* Lighter green background color for header */
     font-weight: bold; /* Make header text bold */
-    color: #333; /* Text color */
+    color: #000000; /* Text color changed to black */
   }
   
   .table tr:nth-child(even) {
-    background-color: #80b42d93; /* Stripe color for even rows */
+    background-color: #e6f2cc; /* Lighter green stripe color for even rows */
   }
   
   .table tr:nth-child(odd) {
-    background-color: rgba(90, 125, 53, 0.68); /* Stripe color for odd rows */
+    background-color: #f0f8dd; /* Lighter green stripe color for odd rows */
   }
   
   .table tr:hover {
-    background-color: rgba(91, 145, 33, 0.606); /* Hover color for rows */
+    background-color: #d0e4a3; /* Lighter green hover color for rows */
   }
   
   .table caption {
