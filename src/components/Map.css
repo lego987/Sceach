@@ -1,26 +1,77 @@
 /* src/components/Map.css */
 
-.leaflet-top.leaflet-right {
-  right: 10px;
-  top: 10px;
-}
-
+/* Ensure the slider container styles are preserved */
 .radius-control-container {
   position: absolute;
   top: 10px;
-  left: 260px;
+  left: 260px; /* Adjust the position as needed */
   background: rgba(59, 98, 1, 0.431); /* Semi-transparent background */
   padding: 10px;
   border-radius: 5px;
   z-index: 1000;
   backdrop-filter: blur(10px); /* Apply blur effect */
+  width: 300px;
 }
 
+/* Slider styles */
 .radius-control-label {
   display: block;
   margin-bottom: 5px;
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflow text */
+  text-overflow: ellipsis; /* Display ellipsis for overflow text */
 }
 
 .radius-control-slider {
   width: 100%;
+}
+
+/* Custom styles for GeoSearch control */
+.leaflet-control-geosearch {
+  position: absolute;
+  top: 2px; /* Adjust as needed */
+  left: 570px; /* Adjust as needed */
+  background: rgba(59, 98, 1, 0.431); /* Semi-transparent background */
+  padding: 10px;
+  border-radius: 8px; /* Rounded corners */
+  backdrop-filter: blur(10px); /* Apply blur effect */
+  z-index: 1000;
+}
+
+/* Style the search input */
+.leaflet-control-geosearch input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.8); /* Slightly translucent background */
+  font-size: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+}
+
+/* Style the search button */
+.leaflet-control-geosearch button {
+  background-color: rgba(59, 98, 1, 0.7); /* Button background color */
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 0px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+/* Button hover and active states */
+.leaflet-control-geosearch button:hover {
+  background-color: rgba(59, 98, 1, 0.9); /* Darker on hover */
+}
+
+.leaflet-control-geosearch button:active {
+  transform: scale(0.98); /* Button press effect */
+}
+
+/* Ensure search control looks consistent with the map controls */
+.leaflet-control-geosearch .leaflet-bar {
+  border-radius: 8px;
 }

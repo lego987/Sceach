@@ -1,58 +1,68 @@
 /*--------------------------------------------------------------
 # Desktop Navigation 
 --------------------------------------------------------------*/
-@media (min-width: 1280px) 
-    .navbar {
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  
-    .navbar ul {
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      list-style: none;
-      width: 100%;
-    }
-  
-    .navbar li {
-      position: relative;
-      width: 100%;
-    }
-  
-    .navbar a,
-    .navbar a:focus {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      padding: 20px 20px;
-      font-family: 'Arial', sans-serif; /* Update this if you use a different font */
-      font-size: 1rem; /* Updated to match Tailwind text size */
-      font-weight: 600; /* Updated to match Tailwind font weight */
-      color: rgb(255, 255, 255); /* Tailwind default white color */
-      text-decoration: none; /* Ensure links are not underlined */
-      white-space: nowrap;
-      transition: color 0.3s;
-      width: 100%;
-    }
-  
-    .navbar a i {
-      font-size: 24px; /* Icon size */
-      margin-right: 10px; /* Space between icon and text */
-    }
-  
-    .navbar a:hover,
-    .navbar .active,
-    .navbar .active:focus,
-    .navbar li:hover > a {
-      color: rgb(191, 253, 180); /* Tailwind default green-200 color */
-    }
-  
-    .navbar .getstarted,
-    .navbar .getstarted:focus {
-      background: rgba(59, 130, 246, 1); /* Tailwind default blue-500 color */
-      padding: 8px 20px;
-    }
+@media (min-width: 1280px) {
+  .navbar {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    width: 100%;
+  }
+
+  .navbar li {
+    position: relative;
+    width: 100%;
+  }
+
+  .nav-link,
+  .nav-link:focus {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px 40px; /* Adjust padding for rectangular shape */
+    font-family: 'Arial', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 0.3s, color 0.3s;
+    width: 100%;
+    background-color: #1f293700; /* Background color similar to sidebar */
+    border: 1px solid transparent; /* Add border for shape */
+    border-radius: 5px; /* Rounded corners, adjust as needed */
+  }
+
+  .nav-link i {
+    font-size: 24px;
+    margin-right: 10px;
+  }
+
+  .nav-link:hover,
+  .navbar .active,
+  .navbar .active:focus,
+  .navbar li:hover > .nav-link {
+    color: #ffffff;
+    background-color: #b3e77b38; /* Slightly darker on hover */
+    border-color: #4c7a32; /* Border color change on hover */
+  }
+
+  .nav-text {
+    flex-grow: 1; /* Ensure text takes up remaining space */
+  }
+
+  .getstarted,
+  .getstarted:focus {
+    background: #3b82f6;
+    padding: 8px 20px;
+  }
+}

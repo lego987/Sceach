@@ -9,11 +9,11 @@ export default function Nav() {
     <nav id="navbar" className="navbar">
       <ul>
         {navs.map(nav => (
-          <li key={nav.id} className='text-red-500'>
+          <li key={nav.id}>
             <Link href={nav.link} legacyBehavior>
-              <a className='flex items-center p-2 hover:bg-gray-200'>
+              <a className='nav-link'>
                 <i className={`bi ${nav.icon} icon-style`}></i>
-                <span className='ml-2'>{nav.name}</span>
+                <span className='nav-text'>{nav.name}</span>
               </a>
             </Link>
           </li>
@@ -22,5 +22,3 @@ export default function Nav() {
     </nav>
   );
 }
-
-

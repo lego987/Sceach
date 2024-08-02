@@ -70,7 +70,7 @@ const MapWithRadius = () => {
             color: 'rgb(59, 98, 1)',
             fillColor: 'rgb(59, 98, 1)',
             fillOpacity: 0.2, // Translucent
-            radius: 3, // Start with radius 0 for animation
+            radius: 0, // Start with radius 0 for animation
           }).addTo(mapInstance);
 
           setCircle(newCircle);
@@ -156,4 +156,3 @@ const MapWithRadius = () => {
 };
 
 export default MapWithRadius;
-
