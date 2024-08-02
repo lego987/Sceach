@@ -5,6 +5,7 @@ import './header.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Nav from './Nav';
 import Sci from './Sci';
+import Image from 'next/image'; // Import Image component from next
 
 export default function Header() {
     const [open, setOpen] = useState(false);
@@ -18,12 +19,17 @@ export default function Header() {
         <header id="header" className="header d-flex align-items-center fixed-top">
             <div className="container-fluid container-xl d-flex align-items-center justify-content-between">
                 <a href="/" className="logo d-flex align-items-center">
-                    <h1>
-                        Sce<span className='text-green-400' style={{ color: "#66BB6A" }}>a</span>ch
-                    </h1>
+                    <Image
+                        src="/images/logo.png"
+                        alt="Logo"
+                        width={200} // Adjust the width and height as needed
+                        height={75}
+                    />
                 </a>
                 <Nav />
             </div>
         </header>
     );
 }
+
+

@@ -11,14 +11,14 @@ body {
     position: fixed;
     left: 0;
     top: 0;
-    width: 250px; /* Adjust the width as needed */
+    width: 200px; /* Adjust the width as needed */
     height: 100%;
     background-color: rgba(59, 98, 1, 0.431);
     color: rgb(255, 137, 137);
     padding: 20px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center; /* Center the content horizontally */
     z-index: 1000;
 }
 
@@ -38,7 +38,8 @@ body {
 .header .container-fluid {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center; /* Center the content horizontally */
+    width: 100%;
 }
 
 .header .logo {
@@ -50,17 +51,6 @@ body {
     margin-bottom: 20px;
 }
 
-.header .logo h1 {
-    margin: 0;
-    font-size: 2.5em;
-}
-
-.header .logo {
-    margin-top: 10px;
-}
-
 .header nav {
     width: 100%;
 }
-
-
