@@ -2,17 +2,22 @@
 
 .container {
     padding: 20px;
-    max-width: 1200px;
+    max-width: 1500px;
     margin: auto;
+  }
+  
+  .tableContainer {
+    overflow-x: auto; /* Add horizontal scrollbar if needed */
+    max-height: 600px; /* Set a max height for the table container */
+    overflow-y: auto; /* Add vertical scrollbar if needed */
   }
   
   .table {
     width: 100%;
-    max-width: 1200px; /* Set a maximum width for the table */
+    max-width: 1300px; /* Set a maximum width for the table */
     border-collapse: collapse; /* Collapse borders into a single line */
-    margin-top: 10px;
-    margin-left: 200px;
-    margin-right: 40px;
+    margin-top: 20px;
+    margin-left: 260px;
     font-family: Arial, sans-serif;
     border: 2px solid rgb(0, 0, 0); /* Border around the table */
     border-radius: 8px; /* Rounded corners */
@@ -33,6 +38,9 @@
     background-color: #d0f8a9; /* Lighter green background color for header */
     font-weight: bold; /* Make header text bold */
     color: #000000; /* Text color changed to black */
+    position: sticky; /* Make header sticky */
+    top: 0; /* Stick to the top of the container */
+    z-index: 1; /* Ensure header is above other content */
   }
   
   .table tr:nth-child(even) {
@@ -68,12 +76,12 @@
   /* Set specific column widths */
   .table th:nth-child(1), 
   .table td:nth-child(1) {
-    width: 100px; /* Fixed width for ID column */
+    width: 40px; /* Fixed width for ID column */
   }
   
   .table th:nth-child(2), 
   .table td:nth-child(2) {
-    width: 300px; /* Fixed width for Description column */
+    width: 250px; /* Fixed width for Description column */
   }
   
   .table th:nth-child(3), 
@@ -86,9 +94,9 @@
     width: 120px; /* Fixed width for Status column */
   }
   
-  .table-container {
-    max-height: 600px; /* Limit height */
-    overflow-y: auto; /* Add vertical scrollbar if needed */
+  .table th:nth-child(5), 
+  .table td:nth-child(5) {
+    width: 150px; /* Fixed width for View Evidence column */
   }
   
   /* Style for the status cell to ensure dropdown fits */

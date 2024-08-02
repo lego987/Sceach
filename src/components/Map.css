@@ -75,3 +75,64 @@
 .leaflet-control-geosearch .leaflet-bar {
   border-radius: 8px;
 }
+
+/* New styles for confirm and cancel buttons */
+.button-container {
+  position: absolute;
+  bottom: 20px; /* Adjust as needed */
+  right: 20px; /* Adjust as needed */
+  display: flex;
+  gap: 10px;
+  z-index: 1000; /* Ensure buttons are above other elements */
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+/* Add blur effect using ::before pseudo-element */
+.button-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(10px); /* Adjust blur level */
+  border-radius: 8px; /* Match button border radius */
+  z-index: -1; /* Place behind the button */
+}
+
+/* Add animation for button appearance */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.confirm-button, .cancel-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1em;
+  color: white;
+}
+
+.confirm-button {
+  background-color: rgba(59, 98, 1, 0.8); /* Green with transparency */
+}
+
+.cancel-button {
+  background-color: rgba(187, 60, 51, 0.8); /* Red with transparency */
+}
+
+.confirm-button:hover, .cancel-button:hover {
+  opacity: 0.8; /* Slightly transparent on hover */
+}
+
+.confirm-button:active, .cancel-button:active {
+  transform: scale(0.98); /* Button press effect */
+}

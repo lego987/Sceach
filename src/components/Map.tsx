@@ -56,6 +56,7 @@ const MapWithRadius = () => {
   const [map, setMap] = useState(null);
   const [circle, setCircle] = useState(null);
   const [radius, setRadius] = useState(500); // Initial radius in meters
+  const [showButtons, setShowButtons] = useState(false);
 
   useEffect(() => {
     if (mapRef.current) {
@@ -76,6 +77,7 @@ const MapWithRadius = () => {
           setCircle(newCircle);
           animateCircle(newCircle, latlng, radius);
         }
+        setShowButtons(true); // Show the buttons when the map is clicked
       });
 
       return () => {
@@ -121,6 +123,19 @@ const MapWithRadius = () => {
     }
   };
 
+  const handleConfirm = () => {
+    alert('Scan confirmed');
+    setShowButtons(false); // Hide the buttons after confirmation
+  };
+
+  const handleCancel = () => {
+    if (circle) {
+      circle.remove(); // Remove the circle
+      setCircle(null); // Clear the circle state
+    }
+    setShowButtons(false); // Hide the buttons after cancellation
+  };
+
   return (
     <>
       <MapContainer
@@ -151,6 +166,12 @@ const MapWithRadius = () => {
           className="radius-control-slider"
         />
       </div>
+      {showButtons && (
+        <div className="button-container">
+          <button onClick={handleConfirm} className="confirm-button">Confirm Scan</button>
+          <button onClick={handleCancel} className="cancel-button">Cancel</button>
+        </div>
+      )}
     </>
   );
 };
