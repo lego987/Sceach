@@ -1,0 +1,112 @@
+/* src/styles/page.module.css */
+
+.container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+  }
+  
+  .table {
+    width: 100%;
+    max-width: 1000px; /* Set a maximum width for the table */
+    border-collapse: collapse; /* Collapse borders into a single line */
+    margin-top: 20px;
+    margin-left: 250px;
+    font-family: Arial, sans-serif;
+    border: 2px solid rgb(0, 0, 0); /* Border around the table */
+    border-radius: 8px; /* Rounded corners */
+    overflow: hidden; /* Hide any overflow from rounded corners */
+  }
+  
+  .table th, .table td {
+    border: 1px solid rgb(38, 38, 38); /* Border around cells */
+    padding: 12px; /* Padding inside cells */
+    text-align: left; /* Align text to the left */
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflow text */
+    text-overflow: ellipsis; /* Display ellipsis for overflow text */
+  }
+  
+  .table th {
+    background-color: #a9f34eb5; /* Background color for header */
+    font-weight: bold; /* Make header text bold */
+    color: #333; /* Text color */
+  }
+  
+  .table tr:nth-child(even) {
+    background-color: #80b42d93; /* Stripe color for even rows */
+  }
+  
+  .table tr:nth-child(odd) {
+    background-color: rgba(90, 125, 53, 0.68); /* Stripe color for odd rows */
+  }
+  
+  .table tr:hover {
+    background-color: rgba(91, 145, 33, 0.606); /* Hover color for rows */
+  }
+  
+  .table caption {
+    caption-side: top; /* Position the caption at the top */
+    font-size: 1.5em; /* Font size for the caption */
+    margin-bottom: 10px; /* Margin below the caption */
+  }
+  
+  .table td {
+    font-size: 0.9em; /* Font size for cells */
+  }
+  
+  .table td:first-child {
+    font-weight: bold; /* Make the first cell in each row bold */
+  }
+  
+  .table td:last-child {
+    text-align: right; /* Align the last cell in each row to the right */
+  }
+  
+  /* Set specific column widths */
+  .table th:nth-child(1), 
+  .table td:nth-child(1) {
+    width: 100px; /* Fixed width for ID column */
+  }
+  
+  .table th:nth-child(2), 
+  .table td:nth-child(2) {
+    width: 300px; /* Fixed width for Description column */
+  }
+  
+  .table th:nth-child(3), 
+  .table td:nth-child(3) {
+    width: 150px; /* Fixed width for Date column */
+  }
+  
+  .table th:nth-child(4), 
+  .table td:nth-child(4) {
+    width: 120px; /* Fixed width for Status column */
+  }
+  
+  .table-container {
+    max-height: 600px; /* Limit height */
+    overflow-y: auto; /* Add vertical scrollbar if needed */
+  }
+  
+  /* Style for the status cell to ensure dropdown fits */
+  .statusCell {
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .statusDropdown {
+    width: 100%;
+    padding: 4px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.9em; /* Ensure dropdown text fits well */
+  }
+  
+  /* Make sure to add specific rules for responsiveness */
+  @media (max-width: 768px) {
+    .table {
+      font-size: 0.8em; /* Reduce font size on smaller screens */
+    }
+  }
+  

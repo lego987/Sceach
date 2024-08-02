@@ -1,17 +1,10 @@
-/* header.css */
-
-body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
+/* Header.module.css */
 
 .header {
     position: fixed;
     left: 0;
     top: 0;
-    width: 200px; /* Adjust the width as needed */
+    width: 250px; /* Adjust the width as needed */
     height: 100%;
     background-color: rgba(59, 98, 1, 0.431);
     color: rgb(255, 137, 137);
@@ -20,6 +13,7 @@ body {
     flex-direction: column;
     align-items: center; /* Center the content horizontally */
     z-index: 1000;
+    box-sizing: border-box; /* Ensure padding and border are included in width/height */
 }
 
 .header::before {
@@ -35,14 +29,7 @@ body {
     z-index: -1;
 }
 
-.header .container-fluid {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center the content horizontally */
-    width: 100%;
-}
-
-.header .logo {
+.logo {
     font-size: 1em;
     text-decoration: none;
     color: #fff;
@@ -51,6 +38,6 @@ body {
     margin-bottom: 20px;
 }
 
-.header nav {
+nav {
     width: 100%;
 }

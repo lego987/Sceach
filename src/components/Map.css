@@ -9,7 +9,7 @@
   padding: 10px;
   border-radius: 5px;
   z-index: 1000;
-  backdrop-filter: blur(10px); /* Apply blur effect */
+  backdrop-filter: blur(20px); /* Apply blur effect */
   width: 300px;
 }
 
