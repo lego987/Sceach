@@ -1,0 +1,18 @@
+/* src/components/ImageCarousel.css */
+
+.image-carousel {
+  position: relative;
+  width: 100%;
+  max-width: 800px; /* Adjust based on your design */
+  margin: auto;
+  overflow: hidden;
+}
+
+.image-carousel img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px; /* Rounded corners */
+  object-fit: cover;
+  transition: opacity 1s ease-in-out;
+}
+

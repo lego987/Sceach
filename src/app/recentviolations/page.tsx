@@ -1,3 +1,4 @@
+// src/app/recent-violations/page.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -14,23 +15,38 @@ const RecentViolationsPage = () => {
   const [data, setData] = useState<TableColumn[]>([]);
 
   useEffect(() => {
-    // Simulate fetching data
-    const fetchData = () => {
-      const rows: TableColumn[] = Array.from({ length: 40 }, (_, index) => ({
-        id: index + 1,
-        description: `Sample Violation ${index + 1}`,
-        date: '2024-08-02',
-        status: 'Pending',
-      }));
-      setData(rows);
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/api/violations');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const rows: TableColumn[] = await response.json();
+        setData(rows);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
     };
     fetchData();
   }, []);
 
-  const handleStatusChange = (index: number, newStatus: string) => {
+  const handleStatusChange = async (index: number, newStatus: string) => {
     const updatedData = [...data];
     updatedData[index].status = newStatus;
     setData(updatedData);
+
+    try {
+      const rowId = data[index].id;
+      await fetch('/api/updateStatus', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: rowId, status: newStatus }),
+      });
+    } catch (error) {
+      console.error('Error updating status:', error);
+    }
   };
 
   return (
@@ -40,19 +56,22 @@ const RecentViolationsPage = () => {
         <table className={styles.table}>
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Description</th>
-              <th>Date</th>
-              <th>Status</th>
-              <th>View Evidence</th>
+              <th className={styles.tableHeader}>ID</th>
+              <th className={styles.tableHeader}>Description</th>
+              <th className={styles.tableHeader}>Date</th>
+              <th className={styles.tableHeader}>Status</th>
+              <th className={styles.tableHeader}>View Evidence</th>
             </tr>
           </thead>
           <tbody>
             {data.map((row, index) => (
-              <tr key={row.id}>
-                <td>{row.id}</td>
-                <td>{row.description}</td>
-                <td>{row.date}</td>
+              <tr 
+                key={row.id} 
+                className={index % 2 === 0 ? styles.tableRowEven : ''}
+              >
+                <td className={styles.tableCell}>{row.id}</td>
+                <td className={styles.tableCell}>{row.description}</td>
+                <td className={styles.tableCell}>{row.date}</td>
                 <td className={styles.statusCell}>
                   <select
                     value={row.status}
@@ -63,7 +82,7 @@ const RecentViolationsPage = () => {
                     <option value="Resolved">Resolved</option>
                   </select>
                 </td>
-                <td><a href="#">click to view</a></td>
+                <td className={styles.tableCell}><a href="#">click to view</a></td>
               </tr>
             ))}
           </tbody>

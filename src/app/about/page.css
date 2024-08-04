@@ -1,0 +1,18 @@
+/* src/app/about/page.css */
+
+.about-wrapper {
+    margin-left: 300px; /* Shift content 260px to the right */
+    padding: 20px; /* Add some padding as needed */
+    font-family: Arial, sans-serif; /* Ensure consistent font styling */
+  }
+  
+  .about-wrapper h1 {
+    color: black; /* Set header text color to black */
+  }
+  
+  .about-wrapper p {
+    color: black; /* Set paragraph text color to black */
+  }
+  
+  
+  

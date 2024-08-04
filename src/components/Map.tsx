@@ -1,3 +1,4 @@
+// src/components/Map.tsx
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
@@ -57,6 +58,8 @@ const MapWithRadius = () => {
   const [circle, setCircle] = useState(null);
   const [radius, setRadius] = useState(500); // Initial radius in meters
   const [showButtons, setShowButtons] = useState(false);
+  const [clickCoordinates, setClickCoordinates] = useState<{ lat: number, lng: number } | null>(null); // State to track click coordinates
+  const [confirmationMessage, setConfirmationMessage] = useState(''); // State to track confirmation message
 
   useEffect(() => {
     if (mapRef.current) {
@@ -64,6 +67,7 @@ const MapWithRadius = () => {
 
       mapInstance.on('click', (event) => {
         const { latlng } = event;
+        setClickCoordinates({ lat: latlng.lat, lng: latlng.lng }); // Update the click coordinates state
         if (circle) {
           animateCircle(circle, latlng, radius);
         } else {
@@ -78,6 +82,7 @@ const MapWithRadius = () => {
           animateCircle(newCircle, latlng, radius);
         }
         setShowButtons(true); // Show the buttons when the map is clicked
+        setConfirmationMessage(''); // Reset confirmation message on new click
       });
 
       return () => {
@@ -123,8 +128,23 @@ const MapWithRadius = () => {
     }
   };
 
-  const handleConfirm = () => {
-    alert('Scan confirmed');
+  const handleConfirm = async () => {
+    if (clickCoordinates) {
+      const { lat, lng } = clickCoordinates;
+      const url = `http://132.226.131.86:3000/submit_scan?x=${lat}&y=${lng}&radius=${radius}`;
+      
+      try {
+        const response = await fetch(url);
+        if (response.ok) {
+          setConfirmationMessage('Scan confirmed successfully');
+        } else {
+          setConfirmationMessage('Error confirming scan');
+        }
+      } catch (error) {
+        setConfirmationMessage('Network error');
+        console.error('Network error:', error);
+      }
+    }
     setShowButtons(false); // Hide the buttons after confirmation
   };
 
@@ -134,6 +154,7 @@ const MapWithRadius = () => {
       setCircle(null); // Clear the circle state
     }
     setShowButtons(false); // Hide the buttons after cancellation
+    setConfirmationMessage(''); // Reset confirmation message on cancellation
   };
 
   return (
@@ -170,6 +191,11 @@ const MapWithRadius = () => {
         <div className="button-container">
           <button onClick={handleConfirm} className="confirm-button">Confirm Scan</button>
           <button onClick={handleCancel} className="cancel-button">Cancel</button>
+        </div>
+      )}
+      {confirmationMessage && (
+        <div className="confirmation-message">
+          {confirmationMessage}
         </div>
       )}
     </>
