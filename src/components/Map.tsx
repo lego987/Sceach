@@ -59,6 +59,7 @@ const MapWithRadius = () => {
   const [showButtons, setShowButtons] = useState(false);
   const [confirmationVisible, setConfirmationVisible] = useState(false);
   const [scanResults, setScanResults] = useState(null); // State to hold scan results
+  const [isBoxVisible, setIsBoxVisible] = useState(false); // State to control floating box visibility
 
   useEffect(() => {
     if (mapRef.current) {
@@ -130,7 +131,7 @@ const MapWithRadius = () => {
       const { lat, lng } = circle.getLatLng();
       
       // Construct the URL with the required parameters
-      const url = `https://api.sceach.eu/submit_scan?x=${lat}&y=${lng}&radius=${radius}`;
+      const url = `https://api.sceach.eu:8443/submit_scan?x=${lat}&y=${lng}&radius=${radius}`;
 
       // Send the GET request to the server
       fetch(url)
@@ -139,6 +140,7 @@ const MapWithRadius = () => {
           setScanResults(data); // Store scan results in state
           setConfirmationVisible(true);
           setTimeout(() => setConfirmationVisible(false), 3000);
+          setIsBoxVisible(true); // Show the floating box after scan results come back
         })
         .catch(error => console.error('Error submitting scan:', error));
     }
@@ -150,6 +152,10 @@ const MapWithRadius = () => {
       setCircle(null); // Clear the circle state
     }
     setShowButtons(false); // Hide the buttons after cancellation
+  };
+
+  const toggleBoxVisibility = () => {
+    setIsBoxVisible(!isBoxVisible); // Toggle floating box visibility
   };
 
   return (
@@ -191,7 +197,10 @@ const MapWithRadius = () => {
       {confirmationVisible && (
         <div className="confirmation-message">Scan coordinates submitted successfully!</div>
       )}
-      {scanResults && (
+      <button onClick={toggleBoxVisibility} className="toggle-button">
+        {isBoxVisible ? 'Hide Results' : 'Show Results'}
+      </button>
+      {isBoxVisible && (
         <div className="floating-box">
           <h3>Scan Results</h3>
           <pre>{JSON.stringify(scanResults, null, 2)}</pre> {/* Display scan results */}
