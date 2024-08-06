@@ -5,7 +5,7 @@
   position: absolute;
   top: 10px;
   left: 260px; /* Adjust the position as needed */
-  background: rgba(59, 98, 1, 0.431); /* Semi-transparent background */
+  background: rgba(75, 123, 3, 0.431); /* Semi-transparent background */
   padding: 10px;
   border-radius: 5px;
   z-index: 1000;
@@ -34,7 +34,7 @@
   position: absolute;
   top: 2px; /* Adjust as needed */
   left: 570px; /* Adjust as needed */
-  background: rgba(59, 98, 1, 0.431); /* Semi-transparent background */
+  background: rgba(78, 128, 2, 0.431); /* Semi-transparent background */
   padding: 10px;
   border-radius: 8px; /* Rounded corners */
   backdrop-filter: blur(10px); /* Apply blur effect */
@@ -54,7 +54,7 @@
 
 /* Style the search button */
 .leaflet-control-geosearch button {
-  background-color: rgba(59, 98, 1, 0.7); /* Button background color */
+  background-color: rgba(87, 141, 5, 0.7); /* Button background color */
   border: none;
   border-radius: 8px;
   padding: 10px 20px;
@@ -67,7 +67,7 @@
 
 /* Button hover and active states */
 .leaflet-control-geosearch button:hover {
-  background-color: rgba(59, 98, 1, 0.9); /* Darker on hover */
+  background-color: rgba(255, 255, 255, 0.9); /* Darker on hover */
 }
 
 .leaflet-control-geosearch button:active {
@@ -144,21 +144,23 @@
 /* Floating box styles */
 .floating-box {
   position: absolute;
-  top: 50px;
-  right: 50px;
-  width: 1000px;
-  height: 700px;
-  background: rgba(59, 98, 1, 0.431);
+  top: 60px;
+  right: 300px;
+  width: 600px;
+  height: 800px;
+  background: rgba(89, 147, 2, 0.431);
   color: rgba(255, 255, 255, 0);
-  padding: 00px;
-  border-radius: 8px;
+  padding: 40px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 12px;
   z-index: 1000;
   overflow-y: auto; /* Allow vertical scroll if content overflows */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
-.floating-box::before {
+/* .floating-box::before {
   content: '';
   position: absolute;
   top: 0;
@@ -167,15 +169,15 @@
   height: 700px;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  background: rgba(30, 30, 30, 0.22);
-  color: rgba(255, 255, 255, 0);
-  padding: 0px;
-  border-radius: 8px;
+  background: rgba(10, 15, 2, 0.22);
+  color: rgb(255, 255, 255);
+  padding: 40px;
+  border-radius: 12px;
   z-index: -1;
   overflow-y: auto;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-}
+} */
 
 /* Confirmation message styles */
 .confirmation-message {
@@ -183,16 +185,24 @@
   top: 50px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #4CAF50;
+  background-color: #4caf4faa;
   color: white;
   padding: 10px 20px;
   border-radius: 5px;
   z-index: 1000;
 }
-.toggle-button {
+.connection-line {
+  position: absolute;
+  background-color: rgba(255, 0, 0, 0.5); /* Red color with transparency */
+  height: 2px; /* Line thickness */
+  transform-origin: 0 0;
+  z-index: 1000; /* Ensure lines are on top */
+}
+
+/* .toggle-button {
   position: absolute;
   top: 10px;
-  right: 20px;
+  right: 50px;
   z-index: 1001;
   padding: 10px 20px;
   background-color: rgb(59, 98, 1);
@@ -204,4 +214,4 @@
 
 .toggle-button:hover {
   background-color: rgb(59, 98, 1, 0.8);
-}
+} */
