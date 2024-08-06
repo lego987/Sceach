@@ -5,9 +5,9 @@ import React, { useEffect, useState } from 'react';
 import './ImageCarousel.css'; // Import the CSS file for carousel styling
 
 const images = [
-  '/images/image1.jpg',
-  '/images/image2.jpg',
-  '/images/image3.jpg',
+  '/images/test1.jpg',
+  '/images/test2.jpg',
+  '/images/test3.jpg',
   // Add more image paths
 ];
 

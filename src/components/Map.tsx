@@ -1,4 +1,3 @@
-// src/components/Map.tsx
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
@@ -58,8 +57,7 @@ const MapWithRadius = () => {
   const [circle, setCircle] = useState(null);
   const [radius, setRadius] = useState(500); // Initial radius in meters
   const [showButtons, setShowButtons] = useState(false);
-  const [clickCoordinates, setClickCoordinates] = useState<{ lat: number, lng: number } | null>(null); // State to track click coordinates
-  const [confirmationMessage, setConfirmationMessage] = useState(''); // State to track confirmation message
+  const [confirmationVisible, setConfirmationVisible] = useState(false);
 
   useEffect(() => {
     if (mapRef.current) {
@@ -67,7 +65,6 @@ const MapWithRadius = () => {
 
       mapInstance.on('click', (event) => {
         const { latlng } = event;
-        setClickCoordinates({ lat: latlng.lat, lng: latlng.lng }); // Update the click coordinates state
         if (circle) {
           animateCircle(circle, latlng, radius);
         } else {
@@ -82,7 +79,6 @@ const MapWithRadius = () => {
           animateCircle(newCircle, latlng, radius);
         }
         setShowButtons(true); // Show the buttons when the map is clicked
-        setConfirmationMessage(''); // Reset confirmation message on new click
       });
 
       return () => {
@@ -128,24 +124,29 @@ const MapWithRadius = () => {
     }
   };
 
-  const handleConfirm = async () => {
-    if (clickCoordinates) {
-      const { lat, lng } = clickCoordinates;
-      const url = `http://132.226.131.86:3000/submit_scan?x=${lat}&y=${lng}&radius=${radius}`;
-      
-      try {
-        const response = await fetch(url);
-        if (response.ok) {
-          setConfirmationMessage('Scan confirmed successfully');
-        } else {
-          setConfirmationMessage('Error confirming scan');
-        }
-      } catch (error) {
-        setConfirmationMessage('Network error');
-        console.error('Network error:', error);
-      }
+  const latLngToTile = (lat, lng, zoom) => {
+    const latRad = (lat * Math.PI) / 180;
+    const n = Math.pow(2, zoom);
+    const x = Math.floor(((lng + 180) / 360) * n);
+    const y = Math.floor(
+      (1 - Math.log(Math.tan(latRad) + 1 / Math.cos(latRad)) / Math.PI) / 2 * n
+    );
+    return { x, y };
+  };
+
+  const handleConfirm = () => {
+    if (circle && map) {
+      const { lat, lng } = circle.getLatLng();
+      const zoom = map.getZoom();
+      const { x, y } = latLngToTile(lat, lng, zoom);
+      fetch(`http://132.226.131.86:3000/submit_scan?x=${x}&y=${y}&zoom=${zoom}`)
+        .then(response => response.json())
+        .then(data => {
+          setConfirmationVisible(true);
+          setTimeout(() => setConfirmationVisible(false), 3000);
+        })
+        .catch(error => console.error('Error submitting scan:', error));
     }
-    setShowButtons(false); // Hide the buttons after confirmation
   };
 
   const handleCancel = () => {
@@ -154,7 +155,6 @@ const MapWithRadius = () => {
       setCircle(null); // Clear the circle state
     }
     setShowButtons(false); // Hide the buttons after cancellation
-    setConfirmationMessage(''); // Reset confirmation message on cancellation
   };
 
   return (
@@ -193,10 +193,8 @@ const MapWithRadius = () => {
           <button onClick={handleCancel} className="cancel-button">Cancel</button>
         </div>
       )}
-      {confirmationMessage && (
-        <div className="confirmation-message">
-          {confirmationMessage}
-        </div>
+      {confirmationVisible && (
+        <div className="confirmation-message">Scan coordinates submitted successfully!</div>
       )}
     </>
   );

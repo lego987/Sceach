@@ -51,7 +51,7 @@ const RecentViolationsPage = () => {
 
   return (
     <div className={styles.container}>
-      <h1>Recent Violations</h1>
+      <h2>Recent Violations</h2>
       <div className={styles.tableContainer}>
         <table className={styles.table}>
           <thead>

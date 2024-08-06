@@ -12,10 +12,18 @@ html, body {
   background-color: #ffffff;
   line-height: 1.6;
 }
+{/*Body Text Colour Change and info */}
+html, h2 {
+  height: 100%;
+  font-family: 'Helvetica';
+  color: rgb(255, 255, 255);
+  background-color: #ffffff;
+  line-height: 1.6;
+}
 html, h1 {
   height: 100%;
   font-family: Helvetica, sans-serif;
-  color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
   line-height: 1.6;
 }
 /* Container */

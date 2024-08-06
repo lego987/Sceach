@@ -4,7 +4,7 @@
   position: relative;
   width: 100%;
   max-width: 800px; /* Adjust based on your design */
-  margin: auto;
+  margin-left: 300px;
   overflow: hidden;
 }
 

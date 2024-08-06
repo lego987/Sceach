@@ -20,10 +20,13 @@
   white-space: nowrap; /* Prevent text from wrapping */
   overflow: hidden; /* Hide overflow text */
   text-overflow: ellipsis; /* Display ellipsis for overflow text */
+  color: white; /* Set label text color to white */
 }
 
 .radius-control-slider {
   width: 100%;
+  color: white; /* Ensure slider text color is white */
+  background: transparent; /* Make slider background transparent */
 }
 
 /* Custom styles for GeoSearch control */
@@ -135,4 +138,17 @@
 
 .confirm-button:active, .cancel-button:active {
   transform: scale(0.98); /* Button press effect */
+}
+
+/* Confirmation message styles */
+.confirmation-message {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  z-index: 1000;
 }
