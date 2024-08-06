@@ -25,7 +25,7 @@
 
 .radius-control-slider {
   width: 100%;
-  color: white; /* Ensure slider text color is white */
+  color: rgba(255, 255, 255, 0); /* Ensure slider text color is white */
   background: transparent; /* Make slider background transparent */
 }
 
@@ -121,7 +121,7 @@
   border-radius: 8px;
   cursor: pointer;
   font-size: 1em;
-  color: white;
+  color: rgb(255, 255, 255);
 }
 
 .confirm-button {
@@ -146,35 +146,37 @@
   position: absolute;
   top: 50px;
   right: 50px;
-  width: 500px;
+  width: 1000px;
   height: 700px;
   background: rgba(59, 98, 1, 0.431);
-  color: white;
-  padding: 20px;
+  color: rgba(255, 255, 255, 0);
+  padding: 00px;
   border-radius: 8px;
   z-index: 1000;
-  overflow-y: auto;
+  overflow-y: auto; /* Allow vertical scroll if content overflows */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
+
 .floating-box::before {
   content: '';
   position: absolute;
-  top: 0px;
-  right: 0px;
-  width: 500px;
+  top: 0;
+  right: 0;
+  width: 1000px;
   height: 700px;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   background: rgba(30, 30, 30, 0.22);
-  color: white;
-  padding: 20px;
+  color: rgba(255, 255, 255, 0);
+  padding: 0px;
   border-radius: 8px;
   z-index: -1;
   overflow-y: auto;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
+
 /* Confirmation message styles */
 .confirmation-message {
   position: absolute;

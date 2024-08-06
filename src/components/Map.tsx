@@ -7,6 +7,7 @@ import 'leaflet-geosearch/dist/geosearch.css';
 import L from 'leaflet';
 import { OpenStreetMapProvider, GeoSearchControl } from 'leaflet-geosearch';
 import './Map.css'; // Import the custom CSS file
+const axios = require('axios')
 
 // Fixing the issue with missing marker icons
 import icon from 'leaflet/dist/images/marker-icon.png';
@@ -58,7 +59,7 @@ const MapWithRadius = () => {
   const [radius, setRadius] = useState(500); // Initial radius in meters
   const [showButtons, setShowButtons] = useState(false);
   const [confirmationVisible, setConfirmationVisible] = useState(false);
-  const [scanResults, setScanResults] = useState(null); // State to hold scan results
+  const [scanResults, setScanResults] = useState<string[]>([]); // Initialize as empty array
   const [isBoxVisible, setIsBoxVisible] = useState(false); // State to control floating box visibility
 
   useEffect(() => {
@@ -134,15 +135,26 @@ const MapWithRadius = () => {
       const url = `https://api.sceach.eu:8443/submit_scan?x=${lat}&y=${lng}&radius=${radius}`;
 
       // Send the GET request to the server
-      fetch(url)
-        .then(response => response.json())
-        .then(data => {
-          setScanResults(data); // Store scan results in state
+      axios.get(url)
+        .then(response => {
+          let data = response.data.processed_images
+          let images = Object.values(data)
+          // Make sure to handle cases where data.images might be undefined
+          console.log('Server response:', data); // Log the response data
+          // if (data.images && Array.isArray(data.images)) {
+          try{
+            setScanResults(images); 
+          } catch {
+            setScanResults([]); // Fallback to an empty array
+          }
           setConfirmationVisible(true);
           setTimeout(() => setConfirmationVisible(false), 3000);
           setIsBoxVisible(true); // Show the floating box after scan results come back
         })
-        .catch(error => console.error('Error submitting scan:', error));
+        .catch(error => {
+          console.error('Error submitting scan:', error);
+          setScanResults([]); // Fallback in case of an error
+        });
     }
   };
 
@@ -203,7 +215,24 @@ const MapWithRadius = () => {
       {isBoxVisible && (
         <div className="floating-box">
           <h3>Scan Results</h3>
-          <pre>{JSON.stringify(scanResults, null, 2)}</pre> {/* Display scan results */}
+          {scanResults.length > 0 ? (
+            scanResults.map((base64String, index) => {
+              console.log(`Rendering image ${index + 1}:`, base64String.slice(0, 100)); // Log the start of the base64 string
+              return (
+                <img 
+                  key={index}
+                  src={`data:image/png;base64,${base64String}`} 
+                  alt={`Scan result ${index + 1}`} 
+                  style={{ width: '100%', height: 'auto', marginBottom: '10px' }}
+                  onError={(e) => {
+                    console.error('Error loading image:', e);
+                  }}
+                />
+              );
+            })
+          ) : (
+            <p>No results available.</p>
+          )}
         </div>
       )}
     </>
