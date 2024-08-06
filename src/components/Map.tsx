@@ -124,22 +124,15 @@ const MapWithRadius = () => {
     }
   };
 
-  const latLngToTile = (lat, lng, zoom) => {
-    const latRad = (lat * Math.PI) / 180;
-    const n = Math.pow(2, zoom);
-    const x = Math.floor(((lng + 180) / 360) * n);
-    const y = Math.floor(
-      (1 - Math.log(Math.tan(latRad) + 1 / Math.cos(latRad)) / Math.PI) / 2 * n
-    );
-    return { x, y };
-  };
-
   const handleConfirm = () => {
-    if (circle && map) {
+    if (circle) {
       const { lat, lng } = circle.getLatLng();
-      const zoom = map.getZoom();
-      const { x, y } = latLngToTile(lat, lng, zoom);
-      fetch(`http://132.226.131.86:3000/submit_scan?x=${x}&y=${y}&zoom=${zoom}`)
+      
+      // Construct the URL with the required parameters
+      const url = `https://api.sceach.eu:8443/submit_scan?x=${lat}&y=${lng}&radius=${radius}`;
+
+      // Send the GET request to the server
+      fetch(url)
         .then(response => response.json())
         .then(data => {
           setConfirmationVisible(true);
