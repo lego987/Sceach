@@ -152,3 +152,24 @@
   border-radius: 5px;
   z-index: 1000;
 }
+/* Floating box styles */
+.floating-box {
+  position: absolute;
+  top: 50px;
+  right: 20px;
+  width: 300px;
+  height: 400px;
+  background: rgba(59, 98, 1, 0.8);
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  z-index: 1000;
+  overflow-y: auto; /* Allow scrolling if content is too long */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.floating-box.hidden {
+  transform: translateX(100%);
+  opacity: 0;
+}

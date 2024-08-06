@@ -58,6 +58,7 @@ const MapWithRadius = () => {
   const [radius, setRadius] = useState(500); // Initial radius in meters
   const [showButtons, setShowButtons] = useState(false);
   const [confirmationVisible, setConfirmationVisible] = useState(false);
+  const [scanResults, setScanResults] = useState(null); // State to hold scan results
 
   useEffect(() => {
     if (mapRef.current) {
@@ -129,12 +130,13 @@ const MapWithRadius = () => {
       const { lat, lng } = circle.getLatLng();
       
       // Construct the URL with the required parameters
-      const url = `https://api.sceach.eu:8443/submit_scan?x=${lat}&y=${lng}&radius=${radius}`;
+      const url = `https://api.sceach.eu/submit_scan?x=${lat}&y=${lng}&radius=${radius}`;
 
       // Send the GET request to the server
       fetch(url)
         .then(response => response.json())
         .then(data => {
+          setScanResults(data); // Store scan results in state
           setConfirmationVisible(true);
           setTimeout(() => setConfirmationVisible(false), 3000);
         })
@@ -188,6 +190,12 @@ const MapWithRadius = () => {
       )}
       {confirmationVisible && (
         <div className="confirmation-message">Scan coordinates submitted successfully!</div>
+      )}
+      {scanResults && (
+        <div className="floating-box">
+          <h3>Scan Results</h3>
+          <pre>{JSON.stringify(scanResults, null, 2)}</pre> {/* Display scan results */}
+        </div>
       )}
     </>
   );
