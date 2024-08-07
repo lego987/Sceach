@@ -53,17 +53,14 @@ const GeoSearch = () => {
 };
 
 const MapWithRadius = () => {
-  const mapRef = useRef<L.Map | null>(null);
-  const [map, setMap] = useState<L.Map | null>(null);
-  const [circle, setCircle] = useState<L.Circle | null>(null);
+  const mapRef = useRef(null);
+  const [map, setMap] = useState(null);
+  const [circle, setCircle] = useState(null);
   const [radius, setRadius] = useState(500); // Initial radius in meters
   const [showButtons, setShowButtons] = useState(false);
   const [confirmationVisible, setConfirmationVisible] = useState(false);
-  const [scanResults, setScanResults] = useState<string[]>([]);
-  const [isBoxVisible, setIsBoxVisible] = useState(false);
-
-  const lineRefs = useRef<HTMLDivElement[]>([]);
-  const floatingBoxRef = useRef<HTMLDivElement | null>(null);
+  const [scanResults, setScanResults] = useState<string[]>([]); // Initialize as empty array
+  const [isBoxVisible, setIsBoxVisible] = useState(false); // State to control floating box visibility
 
   useEffect(() => {
     if (mapRef.current) {
@@ -77,14 +74,14 @@ const MapWithRadius = () => {
           const newCircle = L.circle(latlng, {
             color: 'rgb(168, 117, 50',
             fillColor: 'rgb(168, 117, 50)',
-            fillOpacity: 0.2,
-            radius: 0,
+            fillOpacity: 0.2, // Translucent
+            radius: 0, // Start with radius 0 for animation
           }).addTo(mapInstance);
 
           setCircle(newCircle);
           animateCircle(newCircle, latlng, radius);
         }
-        setShowButtons(true);
+        setShowButtons(true); // Show the buttons when the map is clicked
       });
 
       return () => {
@@ -94,15 +91,15 @@ const MapWithRadius = () => {
   }, [mapRef.current, circle, radius]);
 
   const animateCircle = (circle, latlng, targetRadius) => {
-    const duration = 100;
-    const frameRate = 60;
+    const duration = 100; // Animation duration in ms
+    const frameRate = 60; // Frames per second
     const totalFrames = (duration / 1000) * frameRate;
     const increment = targetRadius / totalFrames;
     let currentRadius = 0;
     let frame = 0;
 
     const bounce = (value) => {
-      const factor = 1.2;
+      const factor = 1.2; // Bounce factor
       return value * (1 - (1 / (value + 1))) * factor;
     };
 
@@ -114,11 +111,11 @@ const MapWithRadius = () => {
         frame++;
         requestAnimationFrame(animate);
       } else {
-        circle.setRadius(targetRadius);
+        circle.setRadius(targetRadius); // Ensure it reaches the exact target radius
       }
     };
 
-    circle.setLatLng(latlng);
+    circle.setLatLng(latlng); // Ensure circle is at the clicked location
     requestAnimationFrame(animate);
   };
 
@@ -133,48 +130,45 @@ const MapWithRadius = () => {
   const handleConfirm = () => {
     if (circle) {
       const { lat, lng } = circle.getLatLng();
-
+      
+      // Construct the URL with the required parameters
       const url = `https://api.sceach.eu:8443/submit_scan?x=${lat}&y=${lng}&radius=${radius}`;
 
+      // Send the GET request to the server
       axios.get(url)
         .then(response => {
-          let data = response.data.processed_images;
-          let images = Object.values(data);
-          try {
+          let data = response.data.processed_images
+          let images = Object.values(data)
+          // Make sure to handle cases where data.images might be undefined
+          console.log('Server response:', data); // Log the response data
+          // if (data.images && Array.isArray(data.images)) {
+          try{
             setScanResults(images); 
           } catch {
-            setScanResults([]);
+            setScanResults([]); // Fallback to an empty array
           }
           setConfirmationVisible(true);
           setTimeout(() => setConfirmationVisible(false), 3000);
-          setIsBoxVisible(true);
+          setIsBoxVisible(true); // Show the floating box after scan results come back
         })
         .catch(error => {
           console.error('Error submitting scan:', error);
-          setScanResults([]);
+          setScanResults([]); // Fallback in case of an error
         });
     }
   };
 
   const handleCancel = () => {
     if (circle) {
-      circle.remove();
-      setCircle(null);
+      circle.remove(); // Remove the circle
+      setCircle(null); // Clear the circle state
     }
-    setShowButtons(false);
+    setShowButtons(false); // Hide the buttons after cancellation
   };
 
   const toggleBoxVisibility = () => {
-    setIsBoxVisible(!isBoxVisible);
+    setIsBoxVisible(!isBoxVisible); // Toggle floating box visibility
   };
-
-  useEffect(() => {
-    if (isBoxVisible) {
-      createLines();
-      window.addEventListener('resize', updateLines);
-      return () => window.removeEventListener('resize', updateLines);
-    }
-  }, [isBoxVisible, circle, map]);
 
   return (
     <>
@@ -182,7 +176,7 @@ const MapWithRadius = () => {
         style={{ height: '100vh', width: '100%' }}
         center={[53.3498, -6.2603]}
         zoom={13}
-        zoomControl={false}
+        zoomControl={false} // Disable default zoom control
         ref={mapRef}
         whenCreated={setMap}
       >
@@ -191,7 +185,7 @@ const MapWithRadius = () => {
           attribution='&copy; <a href="https://www.esri.com/">Esri</a> contributors'
         />
         <GeoSearch />
-        <ZoomControl position="topright" />
+        <ZoomControl position="topright" /> {/* Add zoom control to top right */}
       </MapContainer>
       <div className="radius-control-container">
         <label htmlFor="radius" className="radius-control-label">Scan Radius: {radius} meters</label>
@@ -219,10 +213,11 @@ const MapWithRadius = () => {
         {isBoxVisible ? 'Hide Results' : 'Show Results'}
       </button>
       {isBoxVisible && (
-        <div className="floating-box" ref={floatingBoxRef}>
+        <div className="floating-box">
           <h3>Scan Results</h3>
           {scanResults.length > 0 ? (
             scanResults.map((base64String, index) => {
+              console.log(`Rendering image ${index + 1}:`, base64String.slice(0, 100)); // Log the start of the base64 string
               return (
                 <img 
                   key={index}
@@ -242,41 +237,6 @@ const MapWithRadius = () => {
       )}
     </>
   );
-};
-
-const updateLines = () => {
-  const floatingBox = floatingBoxRef.current;
-  if (!floatingBox || !circle || !map) return;
-
-  const boxRect = floatingBox.getBoundingClientRect();
-  const circleLatLng = circle.getLatLng();
-  const circlePoint = map.latLngToContainerPoint(circleLatLng);
-
-  const lines = lineRefs.current;
-  if (lines.length === 0) {
-    for (let i = 0; i < 2; i++) {
-      const line = document.createElement('div');
-      line.className = 'connection-line';
-      document.body.appendChild(line);
-      lines.push(line);
-    }
-  }
-
-  const boxCorners = [
-    { x: boxRect.left, y: boxRect.top },
-    { x: boxRect.left, y: boxRect.bottom },
-  ];
-
-  boxCorners.forEach((corner, index) => {
-    const dx = circlePoint.x - corner.x;
-    const dy = circlePoint.y - corner.y;
-    const length = Math.sqrt(dx * dx + dy * dy);
-    const angle = (Math.atan2(dy, dx) * 180) / Math.PI;
-    lines[index].style.width = `${length}px`;
-    lines[index].style.transform = `rotate(${angle}deg)`;
-    lines[index].style.top = `${corner.y}px`;
-    lines[index].style.left = `${corner.x}px`;
-  });
 };
 
 export default MapWithRadius;
