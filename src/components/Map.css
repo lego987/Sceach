@@ -82,7 +82,7 @@
 /* New styles for confirm and cancel buttons */
 .button-container {
   position: absolute;
-  bottom: 20px; /* Adjust as needed */
+  bottom: 40px; /* Adjust as needed */
   right: 20px; /* Adjust as needed */
   display: flex;
   gap: 10px;
@@ -145,59 +145,94 @@
 .floating-box {
   position: absolute;
   top: 60px;
-  right: 300px;
-  width: 600px;
-  height: 800px;
-  background: rgba(89, 147, 2, 0.431);
+  right: 50px;
+  width: 400px;
+  height: auto;
+  background: rgba(76, 124, 4, 0.431);
   color: rgba(255, 255, 255, 0);
-  padding: 40px;
+  padding: 10px;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: 12px;
   z-index: 1000;
-  overflow-y: auto; /* Allow vertical scroll if content overflows */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-}
-
-/* .floating-box::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 1000px;
-  height: 700px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  background: rgba(10, 15, 2, 0.22);
-  color: rgb(255, 255, 255);
-  padding: 40px;
-  border-radius: 12px;
-  z-index: -1;
   overflow-y: auto;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-} */
+  /* align-items: right; Center images vertically within each row */
+  gap: 10px; /* Add some space between images */
+}
 
-/* Confirmation message styles */
-.confirmation-message {
-  position: absolute;
-  top: 50px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #4caf4faa;
+/* Ensure images align horizontally and don't stretch */
+.floating-box img {
+  display: inline-block; /* Ensure images don't take up full width */
+  max-width: 70%; /* Ensure images fit within their container */
+  /* max-height: 10%; Ensure images don't exceed container's height */
+  height: auto; /* Maintain aspect ratio */
+  vertical-align: middle; /* Align with surrounding text (if any) */
+  object-fit: contain; /* Ensure images are fully visible within their container */
+}
+.image-container {
+  position: relative;
+  margin-bottom: 10px;
+  text-align: center; /* Center the image and the label */
+}
+
+.scan-image {
+  width: 100%; 
+  height: auto; 
+  object-fit: contain; 
+  margin-bottom: 3px;
+}
+
+.image-label {
   color: white;
+  font-size: 14px;
+  background-color: rgba(0, 0, 0, 0); /* Semi-transparent background */
+  padding: 5px;
+  border-radius: 4px;
+  text-align: center;
+}
+.export-button {
+  margin-top: 20px;
   padding: 10px 20px;
+  background-color: #c8ab28c1;
+  color: white;
+  border: none;
   border-radius: 5px;
-  z-index: 1000;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
-.connection-line {
+
+.export-button:hover {
+  background-color: #45a049;
+}
+/* Map.css */
+.loading-bar-container {
   position: absolute;
-  background-color: rgba(255, 0, 0, 0.5); /* Red color with transparency */
-  height: 2px; /* Line thickness */
-  transform-origin: 0 0;
-  z-index: 1000; /* Ensure lines are on top */
+  bottom: 20px; /* Adjust based on your layout */
+  right: 5px;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 10px;
+  background-color: #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+  z-index: 1000; /* Ensure it appears above other elements */
 }
+
+.loading-bar {
+  width: 0;
+  height: 100%;
+  background-color: #8e8c0ca6;
+  animation: loading 5s forwards;
+}
+
+@keyframes loading {
+  to {
+    width: 100%;
+  }
+}
+
 
 /* .toggle-button {
   position: absolute;

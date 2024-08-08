@@ -7,7 +7,7 @@ import 'leaflet-geosearch/dist/geosearch.css';
 import L from 'leaflet';
 import { OpenStreetMapProvider, GeoSearchControl } from 'leaflet-geosearch';
 import './Map.css'; // Import the custom CSS file
-const axios = require('axios')
+const axios = require('axios');
 
 // Fixing the issue with missing marker icons
 import icon from 'leaflet/dist/images/marker-icon.png';
@@ -61,6 +61,7 @@ const MapWithRadius = () => {
   const [confirmationVisible, setConfirmationVisible] = useState(false);
   const [scanResults, setScanResults] = useState<string[]>([]); // Initialize as empty array
   const [isBoxVisible, setIsBoxVisible] = useState(false); // State to control floating box visibility
+  const [loading, setLoading] = useState(false); // State for loading bar
 
   useEffect(() => {
     if (mapRef.current) {
@@ -134,15 +135,17 @@ const MapWithRadius = () => {
       // Construct the URL with the required parameters
       const url = `https://api.sceach.eu:8443/submit_scan?x=${lat}&y=${lng}&radius=${radius}`;
 
+      // Show the loading bar
+      setLoading(true);
+
       // Send the GET request to the server
       axios.get(url)
         .then(response => {
-          let data = response.data.processed_images
-          let images = Object.values(data)
+          let data = response.data.processed_images;
+          let images = Object.values(data);
           // Make sure to handle cases where data.images might be undefined
           console.log('Server response:', data); // Log the response data
-          // if (data.images && Array.isArray(data.images)) {
-          try{
+          try {
             setScanResults(images); 
           } catch {
             setScanResults([]); // Fallback to an empty array
@@ -150,10 +153,16 @@ const MapWithRadius = () => {
           setConfirmationVisible(true);
           setTimeout(() => setConfirmationVisible(false), 3000);
           setIsBoxVisible(true); // Show the floating box after scan results come back
+
+          // Hide the loading bar after 2 seconds
+          setTimeout(() => setLoading(false), 2000);
         })
         .catch(error => {
           console.error('Error submitting scan:', error);
           setScanResults([]); // Fallback in case of an error
+
+          // Hide the loading bar if there's an error
+          setLoading(false);
         });
     }
   };
@@ -164,10 +173,23 @@ const MapWithRadius = () => {
       setCircle(null); // Clear the circle state
     }
     setShowButtons(false); // Hide the buttons after cancellation
+    setIsBoxVisible(false); // Hide the floating box after cancellation
   };
+  
 
   const toggleBoxVisibility = () => {
     setIsBoxVisible(!isBoxVisible); // Toggle floating box visibility
+  };
+
+  const handleExport = () => {
+    scanResults.forEach((base64String, index) => {
+      const link = document.createElement('a');
+      link.href = `data:image/png;base64,${base64String}`;
+      link.download = index === 0 ? 'before.png' : 'after.png'; // Name the files accordingly
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link); // Clean up the link element
+    });
   };
 
   return (
@@ -200,6 +222,11 @@ const MapWithRadius = () => {
           className="radius-control-slider"
         />
       </div>
+      {loading && (
+        <div className="loading-bar-container">
+          <div className="loading-bar"></div>
+        </div>
+      )}
       {showButtons && (
         <div className="button-container">
           <button onClick={handleConfirm} className="confirm-button">Confirm Scan</button>
@@ -216,20 +243,25 @@ const MapWithRadius = () => {
         <div className="floating-box">
           <h3>Scan Results</h3>
           {scanResults.length > 0 ? (
-            scanResults.map((base64String, index) => {
-              console.log(`Rendering image ${index + 1}:`, base64String.slice(0, 100)); // Log the start of the base64 string
-              return (
-                <img 
-                  key={index}
-                  src={`data:image/png;base64,${base64String}`} 
-                  alt={`Scan result ${index + 1}`} 
-                  style={{ width: '100%', height: 'auto', marginBottom: '10px' }}
-                  onError={(e) => {
-                    console.error('Error loading image:', e);
-                  }}
-                />
-              );
-            })
+            <>
+              {scanResults.map((base64String, index) => {
+                console.log(`Rendering image ${index + 1}:`, base64String.slice(0, 100)); // Log the start of the base64 string
+                return (
+                  <div className="image-container" key={index}>
+                    <img 
+                      src={`data:image/png;base64,${base64String}`} 
+                      alt={`Scan result ${index + 1}`} 
+                      style={{ width: '100%', height: 'auto', marginBottom: '0px' }}
+                      onError={(e) => {
+                        console.error('Error loading image:', e);
+                      }}
+                    />
+                    <div className="image-label">{index === 0 ? 'Before' : 'After'}</div>
+                  </div>
+                );
+              })}
+              <button onClick={handleExport} className="export-button">Export</button> {/* Add Export button */}
+            </>
           ) : (
             <p>No results available.</p>
           )}
