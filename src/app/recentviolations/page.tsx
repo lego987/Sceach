@@ -1,18 +1,48 @@
-// src/app/recent-violations/page.tsx
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
 
 type TableColumn = {
   id: number;
   description: string;
-  date: string;
+  latitude: number;
+  longitude: number;
+  county: string;
+  severity: string;
   status: string;
+  before_img: string;
+  after_img: string;
 };
 
+const mockData: TableColumn[] = [{
+  id: 0,
+  description: 'Example Violation',
+  latitude: 0,
+  longitude: 0,
+  county: 'Sample County',
+  severity: 'Low',
+  status: 'Pending',
+  before_img: 'before.jpg',
+  after_img: 'after.jpg',
+},
+{
+  id: 1,
+  description: 'Second Example Violation',
+  latitude: 10,
+  longitude: 20,
+  county: 'Another County',
+  severity: 'High',
+  status: 'Resolved',
+  before_img: 'before2.jpg',
+  after_img: 'after2.jpg',
+},
+];
+
 const RecentViolationsPage = () => {
-  const [data, setData] = useState<TableColumn[]>([]);
+  const [data, setData] = useState<TableColumn[]>(mockData);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,7 +52,9 @@ const RecentViolationsPage = () => {
           throw new Error('Network response was not ok');
         }
         const rows: TableColumn[] = await response.json();
-        setData(rows);
+        if (rows.length > 0) {
+          setData(rows);
+        }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -49,6 +81,10 @@ const RecentViolationsPage = () => {
     }
   };
 
+  const handleViewDetails = (id: number) => {
+    router.push(`/recentviolations/${id}`);
+  };
+
   return (
     <div className={styles.container}>
       <h2>Recent Violations</h2>
@@ -58,20 +94,17 @@ const RecentViolationsPage = () => {
             <tr>
               <th className={styles.tableHeader}>ID</th>
               <th className={styles.tableHeader}>Description</th>
-              <th className={styles.tableHeader}>Date</th>
+              <th className={styles.tableHeader}>County</th>
               <th className={styles.tableHeader}>Status</th>
-              <th className={styles.tableHeader}>View Evidence</th>
+              <th className={styles.tableHeader}>Actions</th>
             </tr>
           </thead>
           <tbody>
             {data.map((row, index) => (
-              <tr 
-                key={row.id} 
-                className={index % 2 === 0 ? styles.tableRowEven : ''}
-              >
+              <tr key={row.id} className={index % 2 === 0 ? styles.tableRowEven : ''}>
                 <td className={styles.tableCell}>{row.id}</td>
                 <td className={styles.tableCell}>{row.description}</td>
-                <td className={styles.tableCell}>{row.date}</td>
+                <td className={styles.tableCell}>{row.county}</td>
                 <td className={styles.statusCell}>
                   <select
                     value={row.status}
@@ -82,7 +115,11 @@ const RecentViolationsPage = () => {
                     <option value="Resolved">Resolved</option>
                   </select>
                 </td>
-                <td className={styles.tableCell}><a href="#">click to view</a></td>
+                <td className={styles.tableCell}>
+                  <button onClick={() => handleViewDetails(row.id)}>
+                    View Details
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -93,3 +130,4 @@ const RecentViolationsPage = () => {
 };
 
 export default RecentViolationsPage;
+

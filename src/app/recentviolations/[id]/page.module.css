@@ -1,0 +1,80 @@
+/* page.module.css */
+
+.container {
+    padding: 20px;
+    margin-left: 260px; /* Adjust margin as needed */
+    text-align: center; /* Center-align text */
+}
+
+.title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: black; /* Ensure heading color is black */
+}
+
+.violationBox {
+    background-color: #c6ec89; /* Green background */
+    color: white; /* White text color */
+    padding: 15px;
+    border-radius: 10px; /* Rounded corners */
+    margin-bottom: 20px;
+    text-align: center; /* Center-align text inside the box */
+    width: 90%; /* Responsive width based on parent container */
+    max-width: 2000px; /* Maximum width for larger screens */
+    margin-left: auto; /* Center horizontally */
+    margin-right: auto; /* Center horizontally */
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center-align items horizontally */
+    gap: 20px; /* Space between elements */
+}
+
+.images {
+    display: flex;
+    justify-content: center; /* Center-align images horizontally */
+    gap: 20px; /* Space between images */
+}
+
+.imageContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.image {
+    max-width: 200px; /* Adjust size as needed */
+    height: auto;
+}
+
+.imageLabel {
+    margin-top: 10px; /* Space between image and label */
+    font-weight: bold;
+    color: black; /* Ensure label color is black */
+}
+
+.textDetails {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center-align text items horizontally */
+    gap: 10px; /* Space between text items */
+}
+
+.detailItem {
+    display: flex;
+    flex-direction: row;
+    justify-content: center; /* Center-align label and value horizontally */
+    gap: 10px; /* Space between label and value */
+}
+
+.detailLabel {
+    font-weight: bold;
+    width: 150px; /* Fixed width for labels */
+    color: black; /* Ensure label color is black */
+}
+
+.detailValue {
+    color: black; /* Ensure value color is black */
+}
