@@ -7,6 +7,7 @@ import 'leaflet-geosearch/dist/geosearch.css';
 import L from 'leaflet';
 import { OpenStreetMapProvider, GeoSearchControl } from 'leaflet-geosearch';
 import './Map.css'; // Import the custom CSS file
+const axios = require('axios');
 
 // Fixing the issue with missing marker icons
 import icon from 'leaflet/dist/images/marker-icon.png';
@@ -58,6 +59,9 @@ const MapWithRadius = () => {
   const [radius, setRadius] = useState(500); // Initial radius in meters
   const [showButtons, setShowButtons] = useState(false);
   const [confirmationVisible, setConfirmationVisible] = useState(false);
+  const [scanResults, setScanResults] = useState<string[]>([]); // Initialize as empty array
+  const [isBoxVisible, setIsBoxVisible] = useState(false); // State to control floating box visibility
+  const [loading, setLoading] = useState(false); // State for loading bar
 
   useEffect(() => {
     if (mapRef.current) {
@@ -69,8 +73,8 @@ const MapWithRadius = () => {
           animateCircle(circle, latlng, radius);
         } else {
           const newCircle = L.circle(latlng, {
-            color: 'rgb(59, 98, 1)',
-            fillColor: 'rgb(59, 98, 1)',
+            color: 'rgb(168, 117, 50',
+            fillColor: 'rgb(168, 117, 50)',
             fillOpacity: 0.2, // Translucent
             radius: 0, // Start with radius 0 for animation
           }).addTo(mapInstance);
@@ -131,14 +135,35 @@ const MapWithRadius = () => {
       // Construct the URL with the required parameters
       const url = `https://api.sceach.eu:8443/submit_scan?x=${lat}&y=${lng}&radius=${radius}`;
 
+      // Show the loading bar
+      setLoading(true);
+
       // Send the GET request to the server
-      fetch(url)
-        .then(response => response.json())
-        .then(data => {
+      axios.get(url)
+        .then(response => {
+          let data = response.data.processed_images;
+          let images = Object.values(data);
+          // Make sure to handle cases where data.images might be undefined
+          console.log('Server response:', data); // Log the response data
+          try {
+            setScanResults(images); 
+          } catch {
+            setScanResults([]); // Fallback to an empty array
+          }
           setConfirmationVisible(true);
           setTimeout(() => setConfirmationVisible(false), 3000);
+          setIsBoxVisible(true); // Show the floating box after scan results come back
+
+          // Hide the loading bar after 2 seconds
+          setTimeout(() => setLoading(false), 2000);
         })
-        .catch(error => console.error('Error submitting scan:', error));
+        .catch(error => {
+          console.error('Error submitting scan:', error);
+          setScanResults([]); // Fallback in case of an error
+
+          // Hide the loading bar if there's an error
+          setLoading(false);
+        });
     }
   };
 
@@ -148,6 +173,23 @@ const MapWithRadius = () => {
       setCircle(null); // Clear the circle state
     }
     setShowButtons(false); // Hide the buttons after cancellation
+    setIsBoxVisible(false); // Hide the floating box after cancellation
+  };
+  
+
+  const toggleBoxVisibility = () => {
+    setIsBoxVisible(!isBoxVisible); // Toggle floating box visibility
+  };
+
+  const handleExport = () => {
+    scanResults.forEach((base64String, index) => {
+      const link = document.createElement('a');
+      link.href = `data:image/png;base64,${base64String}`;
+      link.download = index === 0 ? 'before.png' : 'after.png'; // Name the files accordingly
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link); // Clean up the link element
+    });
   };
 
   return (
@@ -161,8 +203,8 @@ const MapWithRadius = () => {
         whenCreated={setMap}
       >
         <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+          attribution='&copy; <a href="https://www.esri.com/">Esri</a> contributors'
         />
         <GeoSearch />
         <ZoomControl position="topright" /> {/* Add zoom control to top right */}
@@ -180,6 +222,11 @@ const MapWithRadius = () => {
           className="radius-control-slider"
         />
       </div>
+      {loading && (
+        <div className="loading-bar-container">
+          <div className="loading-bar"></div>
+        </div>
+      )}
       {showButtons && (
         <div className="button-container">
           <button onClick={handleConfirm} className="confirm-button">Confirm Scan</button>
@@ -188,6 +235,37 @@ const MapWithRadius = () => {
       )}
       {confirmationVisible && (
         <div className="confirmation-message">Scan coordinates submitted successfully!</div>
+      )}
+      <button onClick={toggleBoxVisibility} className="toggle-button">
+        {isBoxVisible ? 'Hide Results' : 'Show Results'}
+      </button>
+      {isBoxVisible && (
+        <div className="floating-box">
+          <h3>Scan Results</h3>
+          {scanResults.length > 0 ? (
+            <>
+              {scanResults.map((base64String, index) => {
+                console.log(`Rendering image ${index + 1}:`, base64String.slice(0, 100)); // Log the start of the base64 string
+                return (
+                  <div className="image-container" key={index}>
+                    <img 
+                      src={`data:image/png;base64,${base64String}`} 
+                      alt={`Scan result ${index + 1}`} 
+                      style={{ width: '100%', height: 'auto', marginBottom: '0px' }}
+                      onError={(e) => {
+                        console.error('Error loading image:', e);
+                      }}
+                    />
+                    <div className="image-label">{index === 0 ? 'Before' : 'After'}</div>
+                  </div>
+                );
+              })}
+              <button onClick={handleExport} className="export-button">Export</button> {/* Add Export button */}
+            </>
+          ) : (
+            <p>No results available.</p>
+          )}
+        </div>
       )}
     </>
   );

@@ -12,6 +12,7 @@
     "@types/leaflet": "^1.9.12",
     "aos": "^2.3.4",
     "autoprefixer": "^10.4.19",
+    "axios": "^1.7.3",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
     "dotenv": "^16.4.5",
