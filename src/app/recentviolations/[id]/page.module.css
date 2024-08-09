@@ -58,8 +58,8 @@
 .textDetails {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center-align text items horizontally */
-    gap: 10px; /* Space between text items */
+    align-items: left; /* Center-align text items horizontally */
+    gap: 25px; /* Space between text items */
 }
 
 .detailItem {

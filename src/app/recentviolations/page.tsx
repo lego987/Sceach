@@ -1,3 +1,5 @@
+
+
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -16,9 +18,10 @@ type TableColumn = {
   after_img: string;
 };
 
-const mockData: TableColumn[] = [{
+// Initial mock data
+const initialMockData: TableColumn[] = [{
   id: 0,
-  description: 'Example Violation',
+  description: 'New Violation 0',
   latitude: 0,
   longitude: 0,
   county: 'Sample County',
@@ -29,7 +32,7 @@ const mockData: TableColumn[] = [{
 },
 {
   id: 1,
-  description: 'Second Example Violation',
+  description: 'New Violation 1',
   latitude: 10,
   longitude: 20,
   county: 'Another County',
@@ -37,36 +40,39 @@ const mockData: TableColumn[] = [{
   status: 'Resolved',
   before_img: 'before2.jpg',
   after_img: 'after2.jpg',
-},
-];
+}];
 
 const RecentViolationsPage = () => {
-  const [data, setData] = useState<TableColumn[]>(mockData);
+  const [data, setData] = useState<TableColumn[]>(initialMockData);
   const router = useRouter();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('/api/violations');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const rows: TableColumn[] = await response.json();
-        if (rows.length > 0) {
-          setData(rows);
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchData();
-  }, []);
+    // Simulate new violations being added every 5 seconds
+    const intervalId = setInterval(() => {
+      const newViolation: TableColumn = {
+        id: data.length,
+        description: `New Violation ${data.length + 1}`,
+        latitude: Math.random() * 100,
+        longitude: Math.random() * 100,
+        county: 'New County',
+        severity: 'Medium',
+        status: 'Pending',
+        before_img: `before${data.length + 1}.jpg`,
+        after_img: `after${data.length + 1}.jpg`,
+      };
+      setData((prevData) => [...prevData, newViolation]);
+    }, 5000); // Adjust time as needed
+
+    // Cleanup interval on component unmount
+    return () => clearInterval(intervalId);
+  }, [data]);
 
   const handleStatusChange = async (index: number, newStatus: string) => {
     const updatedData = [...data];
     updatedData[index].status = newStatus;
     setData(updatedData);
 
+    // Simulate API call to update status
     try {
       const rowId = data[index].id;
       await fetch('/api/updateStatus', {
@@ -130,4 +136,3 @@ const RecentViolationsPage = () => {
 };
 
 export default RecentViolationsPage;
-
