@@ -29,13 +29,16 @@
 .tableRowEven {
   background-color: #c6c6c6;
 }
-
-.tableRowHover {
+.tableRowOdd {
+  background-color: #a2a2a2;
+}
+/* Add a class to handle hover effects */
+.tableRow {
   transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
-.tableRowHover:hover {
-  background-color: #73a12d98;
+.tableRow:hover {
+  background-color: #649e0d56;
   transform: scale(1.02); /* Slightly enlarge the row */
 }
 
@@ -55,7 +58,7 @@
 
 .additionalInfo {
   padding: 8px;
-  color: black; 
+  color: black;
 }
 
 .image {

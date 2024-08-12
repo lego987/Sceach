@@ -1,5 +1,3 @@
-
-
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -107,7 +105,7 @@ const RecentViolationsPage = () => {
           </thead>
           <tbody>
             {data.map((row, index) => (
-              <tr key={row.id} className={index % 2 === 0 ? styles.tableRowEven : ''}>
+              <tr key={row.id} className={`${styles.tableRow} ${index % 2 === 0 ? styles.tableRowEven : ''}`}>
                 <td className={styles.tableCell}>{row.id}</td>
                 <td className={styles.tableCell}>{row.description}</td>
                 <td className={styles.tableCell}>{row.county}</td>
