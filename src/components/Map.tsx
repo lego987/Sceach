@@ -261,7 +261,7 @@ const MapWithRadius = () => {
 								return (
 									<div className="image-container" key={index}>
 										<img
-											src={`data:image/png;base64,${base64String[0]}`}
+											src={`data:image/png;base64,${base64String}`}
 											alt={`Scan result ${index + 1}`}
 											style={{
 												width: "100%",
