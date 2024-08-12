@@ -23,8 +23,8 @@ type ViolationDetails = {
 const mockViolation: ViolationDetails = {
   id: 9352,
   description: 'Illegal cutting of hedge.',
-  latitude: 51.875882,
-  longitude: -8.583779,
+  latitude: 51.87600278432267,
+  longitude: -8.586070288915902,
   county: 'sample county',
   severity: 'sample severity',
   status: 'Pending', // Default status
@@ -34,12 +34,12 @@ const mockViolation: ViolationDetails = {
 
 // Function to calculate the square size based on zoom level
 const getSquareSizeForZoom = (zoom: number): number => {
-  const baseZoomLevel = 17; // The zoom level for which you want the base size
+  const baseZoomLevel = 18; // The zoom level for which you want the base size
   const baseSize = 100; // Base size in pixels for zoom level 17
 
   // The size should decrease as zoom level decreases
   // We use an exponential scaling factor to adjust the size appropriately
-  const scaleFactor = Math.pow(2, baseZoomLevel - zoom); 
+  const scaleFactor = Math.pow(2, baseZoomLevel - zoom);
   return baseSize * scaleFactor;
 };
 
@@ -67,7 +67,7 @@ const TileSquareMarker = ({ position }: { position: L.LatLngExpression }) => {
       position={position}
       icon={L.divIcon({
         className: styles.customSquare,
-        html: `<div style="width: ${squareSize}px; height: ${squareSize}px; background: rgba(255, 0, 0, 0.5); border: 1px solid red;"></div>`,
+        html: `<div style="width: ${squareSize}px; height: ${squareSize}px; background: rgba(205, 162, 8, 0.3);"></div>`,
         iconSize: [squareSize, squareSize],
         iconAnchor: [squareSize / 2, squareSize / 2],
       })}
@@ -100,7 +100,7 @@ const ViolationDetailPage = ({ params }: { params: { id: string } }) => {
 
   if (!violation) return <div>Loading...</div>;
 
-  // Define bounds for a 2km by 2km area
+  // Define bounds for a 2km by 2km area centered on the violation
   const bounds = L.latLngBounds(
     [violation.latitude - 0.009, violation.longitude - 0.009],
     [violation.latitude + 0.009, violation.longitude + 0.009]
@@ -111,12 +111,18 @@ const ViolationDetailPage = ({ params }: { params: { id: string } }) => {
       <div className={styles.mapContainer}>
         <MapContainer
           center={[violation.latitude, violation.longitude]}
-          zoom={17}
+          zoom={25}
           className={styles.map}
-          scrollWheelZoom={true}
-          zoomControl={true}
-          maxBounds={bounds}
-          maxBoundsViscosity={1.0}
+          scrollWheelZoom={false} // Disable scroll wheel zoom
+          zoomControl={false} // Disable zoom control buttons
+          doubleClickZoom={false} // Disable double click zoom
+          dragging={true} // Enable panning
+          boxZoom={false} // Disable box zoom
+          keyboard={false} // Disable keyboard navigation
+          touchZoom={false} // Disable touch zoom
+          style={{ height: '100vh', width: '100%' }}
+          maxBounds={bounds} // Restrict the map panning area to the bounds
+          maxBoundsViscosity={1.0} // Prevent panning outside of the bounds
         >
           <TileLayer
             url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"

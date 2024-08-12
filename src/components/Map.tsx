@@ -196,7 +196,7 @@ const MapWithRadius = () => {
     <>
       <MapContainer
         style={{ height: '100vh', width: '100%' }}
-        center={[53.3498, -6.2603]}
+        center={[51.87600278432267, -8.586070288915902]}
         zoom={13}
         zoomControl={false} // Disable default zoom control
         ref={mapRef}

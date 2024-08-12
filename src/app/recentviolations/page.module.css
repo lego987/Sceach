@@ -17,27 +17,32 @@
 .tableHeader {
   background-color: #94d13498;
   text-align: left;
-  color:#00000098;
+  color: #00000098;
 }
 
 .tableCell {
   border: 1px solid rgb(22, 21, 21);
   padding: 8px;
-  color:#00000098;
+  color: #00000098;
 }
 
 .tableRowEven {
-  background-color: #ffffff;
+  background-color: #c6c6c6;
+}
+
+.tableRowHover {
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 .tableRowHover:hover {
   background-color: #73a12d98;
+  transform: scale(1.02); /* Slightly enlarge the row */
 }
 
 .statusCell {
   border: 1px solid rgb(22, 21, 21);
   text-align: center;
-  color:#00000098;
+  color: #00000098;
 }
 
 .statusDropdown {
