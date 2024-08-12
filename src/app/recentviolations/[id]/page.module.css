@@ -1,80 +1,136 @@
-/* page.module.css */
-
+/* Container for map and content */
 .container {
-    padding: 20px;
-    margin-left: 260px; /* Adjust margin as needed */
-    text-align: center; /* Center-align text */
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
 }
 
-.title {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: black; /* Ensure heading color is black */
+/* Map Container */
+.mapContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Place the map below other content */
+    filter: blur(1px); /* Apply blur effect */
+    overflow: hidden;
 }
 
-.violationBox {
-    background-color: #c6ec89; /* Green background */
-    color: white; /* White text color */
+/* Map Styles */
+.map {
+    width: 100%;
+    height: 100%;
+}
+
+/* Content Styles */
+.content {
+    position: absolute; /* Change to absolute to allow positioning on the screen */
+    right: 20px; /* Move to the right side of the screen */
+    top: 30%; /* Vertically center the content */
+    transform: translateY(-50%); /* Adjust for vertical centering */
+    z-index: 2; /* Place content above the map */
     padding: 15px;
-    border-radius: 10px; /* Rounded corners */
+    background: rgba(61, 117, 0, 0.269); /* Semi-transparent background */
+    border-radius: 15px;
+    width: 400px; /* Set a fixed width for the content box */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    color: white; /* Set text color to white */
+}
+
+/* Title */
+.title {
+    color: rgb(223, 248, 177); /* White color for title */
+}
+
+/* Violation Box */
+.violationBox {
     margin-bottom: 20px;
-    text-align: center; /* Center-align text inside the box */
-    width: 90%; /* Responsive width based on parent container */
-    max-width: 2000px; /* Maximum width for larger screens */
-    margin-left: auto; /* Center horizontally */
-    margin-right: auto; /* Center horizontally */
 }
 
-.details {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center-align items horizontally */
-    gap: 20px; /* Space between elements */
-}
-
+/* Images Section */
 .images {
     display: flex;
-    justify-content: center; /* Center-align images horizontally */
-    gap: 20px; /* Space between images */
+    justify-content: space-between;
+    margin-bottom: 20px;
 }
 
 .imageContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    width: 48%;
+    position: relative;
 }
 
 .image {
-    max-width: 200px; /* Adjust size as needed */
+    width: 100%;
     height: auto;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .imageLabel {
-    margin-top: 10px; /* Space between image and label */
-    font-weight: bold;
-    color: black; /* Ensure label color is black */
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background: rgba(205, 162, 8, 0.648);
+    color: rgba(255, 234, 200, 0.779); /* Change to white for visibility */
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid rgba(29, 29, 29, 0.892); /* Light border for better visibility */
+    padding: 5px;
 }
 
-.textDetails {
-    display: flex;
-    flex-direction: column;
-    align-items: left; /* Center-align text items horizontally */
-    gap: 25px; /* Space between text items */
+/* Light Blue Containers */
+.lightBlueContainer {
+    background-color: #3b55075d;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #23350795;
+    margin-bottom: 10px;
+    color: white; /* Set text color to white */
 }
 
+/* Detail Item */
 .detailItem {
-    display: flex;
-    flex-direction: row;
-    justify-content: center; /* Center-align label and value horizontally */
-    gap: 10px; /* Space between label and value */
+    margin-bottom: 10px;
 }
 
+/* Detail Label */
 .detailLabel {
     font-weight: bold;
-    width: 150px; /* Fixed width for labels */
-    color: black; /* Ensure label color is black */
+    color: rgb(234, 255, 193); /* Ensure label text is white */
 }
 
+/* Detail Value */
 .detailValue {
-    color: black; /* Ensure value color is black */
+    margin-left: 10px;
+    color: white; /* Ensure value text is white */
+}
+
+/* Dropdown Styles */
+.statusDropdown {
+    background-color: rgba(205, 162, 8, 0.648); /* Semi-transparent background */
+    color: rgb(40, 38, 20); /* White text color */
+    border: 1px solid rgba(29, 29, 29, 0.892); /* Light border for better visibility */
+    padding: 5px;
+    border-radius: 5px;
+}
+
+/* Custom Marker Styles */
+.custom-marker {
+    background: transparent; /* Ensures no background from divIcon */
+}
+
+.custom-icon {
+    width: 30px; /* Adjust size as needed */
+    height: 30px; /* Adjust size as needed */
+    background-color: #ff5722; /* Marker color */
+    border-radius: 8px; /* Rounded corners */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Optional shadow for better visibility */
+    z-index: 3;
 }

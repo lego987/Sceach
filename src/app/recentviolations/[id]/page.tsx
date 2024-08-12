@@ -1,9 +1,12 @@
-'use client';
+'use client'; // Add this directive to mark the file as a client component
 
-import { useRouter } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
+import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 import styles from './page.module.css';
 
+// Define the ViolationDetails type
 type ViolationDetails = {
   id: number;
   description: string;
@@ -16,36 +19,74 @@ type ViolationDetails = {
   after_img: string;
 };
 
+// Mock violation data
 const mockViolation: ViolationDetails = {
-  id: 1,
+  id: 9352,
   description: 'Illegal cutting of hedge.',
-  latitude: 34.0522,
-  longitude: -118.2437,
+  latitude: 51.875882,
+  longitude: -8.583779,
   county: 'sample county',
   severity: 'sample severity',
-  status: 'Pending/resolved',
+  status: 'Pending', // Default status
   before_img: 'sample img',
   after_img: 'sample img',
 };
 
+// Function to calculate the square size based on zoom level
+const getSquareSizeForZoom = (zoom: number): number => {
+  const baseZoomLevel = 17; // The zoom level for which you want the base size
+  const baseSize = 100; // Base size in pixels for zoom level 17
+
+  // The size should decrease as zoom level decreases
+  // We use an exponential scaling factor to adjust the size appropriately
+  const scaleFactor = Math.pow(2, baseZoomLevel - zoom); 
+  return baseSize * scaleFactor;
+};
+
+// TileSquareMarker Component
+const TileSquareMarker = ({ position }: { position: L.LatLngExpression }) => {
+  const map = useMap();
+  const [squareSize, setSquareSize] = useState<number>(getSquareSizeForZoom(map.getZoom()));
+
+  useEffect(() => {
+    const handleZoomEnd = () => {
+      const zoom = map.getZoom();
+      setSquareSize(getSquareSizeForZoom(zoom));
+    };
+
+    handleZoomEnd(); // Set initial size
+    map.on('zoomend', handleZoomEnd);
+
+    return () => {
+      map.off('zoomend', handleZoomEnd);
+    };
+  }, [map]);
+
+  return (
+    <Marker
+      position={position}
+      icon={L.divIcon({
+        className: styles.customSquare,
+        html: `<div style="width: ${squareSize}px; height: ${squareSize}px; background: rgba(255, 0, 0, 0.5); border: 1px solid red;"></div>`,
+        iconSize: [squareSize, squareSize],
+        iconAnchor: [squareSize / 2, squareSize / 2],
+      })}
+    />
+  );
+};
+
+// ViolationDetailPage Component
 const ViolationDetailPage = ({ params }: { params: { id: string } }) => {
   const [violation, setViolation] = useState<ViolationDetails | null>(null);
+  const [status, setStatus] = useState<string>('Pending'); // State for dropdown
   const { id } = params;
 
   useEffect(() => {
-    // Simulate fetching data by setting mock data after a delay
     const fetchDetails = async () => {
       try {
-        // Replace this with a real API call when the database is available
-        // const response = await fetch(`/api/violations/${id}`);
-        // if (!response.ok) {
-        //   throw new Error('Network response was not ok');
-        // }
-        // const data: ViolationDetails = await response.json();
-        
-        // Use mock data for now
         const data = mockViolation;
         setViolation(data);
+        setStatus(data.status); // Initialize status state
       } catch (error) {
         console.error('Error fetching details:', error);
       }
@@ -53,51 +94,90 @@ const ViolationDetailPage = ({ params }: { params: { id: string } }) => {
     fetchDetails();
   }, [id]);
 
+  const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setStatus(event.target.value);
+  };
+
   if (!violation) return <div>Loading...</div>;
+
+  // Define bounds for a 2km by 2km area
+  const bounds = L.latLngBounds(
+    [violation.latitude - 0.009, violation.longitude - 0.009],
+    [violation.latitude + 0.009, violation.longitude + 0.009]
+  );
 
   return (
     <div className={styles.container}>
-      <div className={styles.violationBox}>
-        <h1 className={styles.title}>Violation Details</h1>
+      <div className={styles.mapContainer}>
+        <MapContainer
+          center={[violation.latitude, violation.longitude]}
+          zoom={17}
+          className={styles.map}
+          scrollWheelZoom={true}
+          zoomControl={true}
+          maxBounds={bounds}
+          maxBoundsViscosity={1.0}
+        >
+          <TileLayer
+            url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+            attribution='&copy; <a href="https://www.esri.com/">Esri</a> contributors'
+          />
+          <TileSquareMarker position={[violation.latitude, violation.longitude]} />
+        </MapContainer>
       </div>
-      <div className={styles.images}>
-        <div className={styles.imageContainer}>
-          <img src={violation.before_img} alt="Before" className={styles.image} />
-          <div className={styles.imageLabel}>Before</div>
+
+      <div className={styles.content}>
+        <div className={styles.violationBox}>
+          <h1 className={styles.title}>Violation Details</h1>
         </div>
-        <div className={styles.imageContainer}>
-          <img src={violation.after_img} alt="After" className={styles.image} />
-          <div className={styles.imageLabel}>After</div>
+        <div className={styles.images}>
+          <div className={styles.imageContainer}>
+            <img src={violation.before_img} alt="Before" className={styles.image} />
+            <div className={styles.imageLabel}>Before</div>
+          </div>
+          <div className={styles.imageContainer}>
+            <img src={violation.after_img} alt="After" className={styles.image} />
+            <div className={styles.imageLabel}>After</div>
+          </div>
         </div>
-      </div>
-      <div className={styles.textDetails}>
-        <div className={styles.detailItem}>
-          <span className={styles.detailLabel}>ID:</span>
-          <span className={styles.detailValue}>{violation.id}</span>
+
+        <div className={styles.lightBlueContainer}>
+          <div className={styles.detailItem}>
+            <span className={styles.detailLabel}>ID:</span>
+            <span className={styles.detailValue}>{violation.id}</span>
+          </div>
+          <div className={styles.detailItem}>
+            <span className={styles.detailLabel}>Description:</span>
+            <span className={styles.detailValue}>{violation.description}</span>
+          </div>
         </div>
-        <div className={styles.detailItem}>
-          <span className={styles.detailLabel}>Description:</span>
-          <span className={styles.detailValue}>{violation.description}</span>
-        </div>
-        <div className={styles.detailItem}>
-          <span className={styles.detailLabel}>Latitude:</span>
-          <span className={styles.detailValue}>{violation.latitude}</span>
-        </div>
-        <div className={styles.detailItem}>
-          <span className={styles.detailLabel}>Longitude:</span>
-          <span className={styles.detailValue}>{violation.longitude}</span>
-        </div>
-        <div className={styles.detailItem}>
-          <span className={styles.detailLabel}>County:</span>
-          <span className={styles.detailValue}>{violation.county}</span>
-        </div>
-        <div className={styles.detailItem}>
-          <span className={styles.detailLabel}>Severity:</span>
-          <span className={styles.detailValue}>{violation.severity}</span>
-        </div>
-        <div className={styles.detailItem}>
-          <span className={styles.detailLabel}>Status:</span>
-          <span className={styles.detailValue}>{violation.status}</span>
+
+        <div className={styles.lightBlueContainer}>
+          <div className={styles.detailItem}>
+            <span className={styles.detailLabel}>Latitude:</span>
+            <span className={styles.detailValue}>{violation.latitude}</span>
+          </div>
+          <div className={styles.detailItem}>
+            <span className={styles.detailLabel}>Longitude:</span>
+            <span className={styles.detailValue}>{violation.longitude}</span>
+          </div>
+          <div className={styles.detailItem}>
+            <span className={styles.detailLabel}>County:</span>
+            <span className={styles.detailValue}>{violation.county}</span>
+          </div>
+          <div className={styles.detailItem}>
+            <span className={styles.detailLabel}>Severity:</span>
+            <span className={styles.detailValue}>{violation.severity}</span>
+          </div>
+          <div className={styles.detailItem}>
+            <span className={styles.detailLabel}>Status:</span>
+            <span className={styles.detailValue}>
+              <select value={status} onChange={handleStatusChange} className={styles.statusDropdown}>
+                <option value="Pending">Pending</option>
+                <option value="Resolved">Resolved</option>
+              </select>
+            </span>
+          </div>
         </div>
       </div>
     </div>
