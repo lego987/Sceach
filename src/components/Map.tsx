@@ -128,6 +128,10 @@ const MapWithRadius = () => {
 		}
 	};
 
+	useEffect(() => {
+		setRadius(400);
+	});
+
 	const handleConfirm = () => {
 		if (circle) {
 			const { lat, lng } = circle.getLatLng();
