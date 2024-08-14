@@ -129,7 +129,7 @@ const MapWithRadius = () => {
 	};
 
 	useEffect(() => {
-		setRadius(400);
+		setRadius(100);
 	});
 
 	const handleConfirm = () => {
@@ -137,7 +137,8 @@ const MapWithRadius = () => {
 			const { lat, lng } = circle.getLatLng();
 
 			// Construct the URL with the required parameters
-			const url = `https://api.sceach.eu:8443/submit_scan?x=${lat}&y=${lng}&radius=${radius}`;
+			// const url = `http://127.0.0.1:3000/submit_scan?x=${lat}&y=${lng}&radius=${radius}`;
+			const url = `https://api.sceach.eu/submit_scan?x=${lat}&y=${lng}&radius=${radius}`;
 
 			// Show the loading bar
 			setLoading(true);
