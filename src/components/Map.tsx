@@ -189,7 +189,7 @@ const MapWithRadius = () => {
 	const handleExport = () => {
 		scanResults.forEach((base64String, index) => {
 			const link = document.createElement("a");
-			link.href = `data:image/png;base64,${base64String}`;
+			link.href = `data:image/png;base64,${base64String[0]}`;
 			link.download = index === 0 ? "before.png" : "after.png"; // Name the files accordingly
 			document.body.appendChild(link);
 			link.click();
@@ -260,8 +260,8 @@ const MapWithRadius = () => {
 						<>
 							{scanResults.map((base64String, index) => {
 								console.log(
-									`Rendering image ${index + 1}:`,
-									base64String.slice(0, 100)
+									`Rendering image ${index + 1}:`
+									// base64String.slice(0, 100)
 								); // Log the start of the base64 string
 								return (
 									<div className="image-container" key={index}>

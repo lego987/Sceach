@@ -141,7 +141,7 @@ const ViolationDetailPage = ({ params }: { params: { id: string } }) => {
 				<div className={styles.images}>
 					<div className={styles.imageContainer}>
 						<img
-							src={"data:image/png;base64," + violation.before_img ?? ""}
+							src={"data:image/png;base64," + violation.after_img ?? ""}
 							alt="Before"
 							className={styles.image}
 						/>
@@ -149,7 +149,7 @@ const ViolationDetailPage = ({ params }: { params: { id: string } }) => {
 					</div>
 					<div className={styles.imageContainer}>
 						<img
-							src={"data:image/png;base64," + violation.after_img ?? ""}
+							src={"data:image/png;base64," + violation.before_img ?? ""}
 							alt="After"
 							className={styles.image}
 						/>
@@ -183,7 +183,7 @@ const ViolationDetailPage = ({ params }: { params: { id: string } }) => {
 					</div>
 					<div className={styles.detailItem}>
 						<span className={styles.detailLabel}>Severity:</span>
-						<span className={styles.detailValue}>{violation.severity}</span>
+						<span className={styles.detailValue}>{violation.severity} %</span>
 					</div>
 					<div className={styles.detailItem}>
 						<span className={styles.detailLabel}>Status:</span>
