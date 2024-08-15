@@ -1,8 +1,18 @@
 /* src/app/recent-violations/page.module.css */
 
+/* Apply the green background to the entire page */
+.body {
+  background-color: #3a5f0b; /* A dark green shade */
+}
+
 .container {
   padding: 20px;
   margin-left: 270px;
+}
+
+/* Ensure the container background is transparent so the green background shows through */
+.container {
+  background-color: transparent;
 }
 
 .tableContainer {
@@ -27,18 +37,20 @@
 }
 
 .tableRowEven {
-  background-color: #c6c6c6;
+  background-color: #ffffff;
 }
+
 .tableRowOdd {
   background-color: #a2a2a2;
 }
+
 /* Add a class to handle hover effects */
 .tableRow {
-  transition: transform 0.3s ease, background-color 0.3s ease;
+  transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
 .tableRow:hover {
-  background-color: #649e0d56;
+  background-color: #6a9c1f4e;
   transform: scale(1.02); /* Slightly enlarge the row */
 }
 
