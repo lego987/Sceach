@@ -23,7 +23,7 @@ export default function Header() {
                         src="/images/logo.png"
                         alt="Logo"
                         width={200} // Adjust the width and height as needed
-                        height={75}
+                        height={80}
                     />
                 </a>
                 <Nav />
