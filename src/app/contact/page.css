@@ -1,0 +1,44 @@
+.container {
+    margin-left: 260px; /* Matches About Us layout */
+    padding: 20px; /* Consistent spacing */
+  }
+  
+  h1 {
+    color: rgb(46, 16, 16); /* Consistent header text color */
+  }
+  
+  p {
+    color: rgb(0, 0, 0); /* Consistent paragraph text color */
+  }
+  
+  form {
+    margin-top: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    color: rgb(46, 16, 16);
+  }
+  
+  input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  button {
+    background-color: rgb(46, 16, 16);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: rgb(60, 20, 20);
+  }
+  

@@ -1,15 +1,55 @@
 /* src/app/about/page.css */
 
 .container {
-    margin-left: 260px; /* Add margin to the left to account for the header */
-    padding: 20px; /* Add some padding for spacing */
-  }
-  
-  h1 {
-    color: rgb(46, 16, 16); /* Set header text color */
-  }
-  
-  p {
-    color: rgb(0, 0, 0); /* Set paragraph text color */
-  }
-  
+	margin-left: 260px; /* Consistent layout spacing */
+	padding: 20px; /* Padding for content spacing */
+	padding-top: 0px;
+	font-family: Arial, sans-serif; /* Clean font choice */
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+header {
+	background-color: white;
+}
+
+h1 {
+	width: 100vh;
+	display: absolute;
+	color: rgb(46, 16, 16); /* Header text color */
+	font-size: 2.5rem; /* Larger font size for emphasis */
+	margin-bottom: 20px; /*Space below header*/
+	border-bottom: 2px solid rgb(46, 16, 16); /* Underline style */
+	padding-bottom: 10px;
+	background-color: rgb(221, 248, 168);
+	padding-top: 10px;
+	border-radius: 10px;
+}
+
+p {
+	color: rgb(50, 50, 50); /* Softer text color */
+	line-height: 1.6; /* Improved readability */
+	margin-bottom: 20px;
+}
+
+.image-carousel {
+	margin: 20px 0; /* Space around carousel */
+	border: 1px solid #ccc; /* Subtle border */
+	/*centre the carousel*/
+	display: flex;
+	justify-content: center;
+
+	width: 40%;
+	border-radius: 10px; /* Rounded corners */
+	overflow: hidden; /* Ensure clean edges */
+}
+
+.version {
+	margin-top: 20px;
+	font-size: 0.9rem; /* Subtle version text */
+	color: rgb(100, 100, 100);
+}
+section {
+	width: 60%;
+}

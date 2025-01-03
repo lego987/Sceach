@@ -7,7 +7,7 @@ import "./ImageCarousel.css"; // Import the CSS file for carousel styling
 const images = [
 	"/images/test1.jpg",
 	"/images/test2.jpg",
-	"/images/test3.jpg",
+	// "/images/test3.jpg",
 	// Add more image paths
 ];
 
